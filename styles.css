@@ -130,10 +130,9 @@ h3 {
 .logo-icon {
     width: 24px;
     height: 24px;
-    border-radius: 6px;
-    background: linear-gradient(135deg, var(--violet-primary), var(--orange-accent));
+    mix-blend-mode: screen;
+    object-fit: contain; 
 }
-
 .nav-links {
     display: flex;
     align-items: center;
