@@ -1,68 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>quarkmemory | the memory layer for software</title>
-    <meta name="description"
-        content="QuarkMemory is a self-contained context layering engine that synthesizes large tech documents into fundamental symbols and actively ingests good context into the IDE's code editing pipeline.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="logo.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuarkMemory — Every Decision Attached</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --background: #0d0c0b;
+      --background-raised: #131210;
+      --foreground: #f5f3f0;
+      --card: #1e1c1a;
+      --card-border: #2a2724;
+      --primary: #b67be6;
+      --secondary: #ffad03;
+      --muted-fg: #8a8480;
+      --body-fg: #c8c4be;
+      --border: #242220;
+      --destructive: #e84040;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      background: var(--background);
+      color: var(--foreground);
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.5;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      background: rgba(13,12,11,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1280px; margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      width: 40px; height: 40px;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700; font-size: 14px; color: #0d0c0b;
+    }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8125rem; color: var(--muted-fg); transition: color 0.15s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--foreground); }
+
+    /* HERO */
+    #hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 6rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    /* Grain texture */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 0;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none;
+    }
+
+    .hero-grid-bg {
+      position: absolute; inset: 0; z-index: 0;
+      opacity: 0.03;
+      background-image:
+        linear-gradient(rgba(182,123,230,0.8) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(182,123,230,0.8) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* Glow blobs in background */
+    .hero-blob-purple {
+      position: absolute; top: 20%; left: -10%; z-index: 0;
+      width: 600px; height: 600px;
+      background: radial-gradient(ellipse, rgba(182,123,230,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-blob-gold {
+      position: absolute; bottom: 10%; right: -5%; z-index: 0;
+      width: 500px; height: 500px;
+      background: radial-gradient(ellipse, rgba(255,173,3,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; color: var(--primary);
+      margin-bottom: 2rem; letter-spacing: 0.1em;
+      opacity: 0.8;
+    }
+    .hero-h1 { margin-bottom: 3rem; line-height: 0.85; }
+    .hero-h1 .line { display: block; font-size: clamp(64px, 8vw, 96px); font-weight: 900; letter-spacing: -0.04em; font-family: 'DM Sans', sans-serif; }
+    .hero-h1 .line-white { color: var(--foreground); }
+    .hero-h1 .line-purple { color: var(--primary); }
+    .hero-h1 .line-gold { color: var(--secondary); }
+    .hero-text p {
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+    .hero-text p.muted { color: var(--body-fg); }
+    .hero-text p.muted .mono { color: var(--secondary); font-size: 0.9em; }
+    .hero-text p.big { color: var(--foreground); font-size: 1.0625rem; font-weight: 400; }
+    .hero-text p.accent {
+      color: var(--foreground);
+      font-size: 1.125rem;
+      font-weight: 500;
+      padding-top: 0.5rem;
+    }
+    .hero-text p.accent span { color: var(--secondary); font-style: italic; }
+
+    /* CODE PANEL */
+    .code-panel {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-top: 1px solid rgba(182,123,230,0.25);
+      padding: 1.5rem; position: relative;
+    }
+    .code-panel-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; color: var(--muted-fg);
+      margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .code-panel-label::before {
+      content: '';
+      display: inline-block; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--primary);
+    }
+    .code-block { font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; }
+    .code-line { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 0.75rem; }
+    .code-num { color: #3a3632; flex-shrink: 0; user-select: none; }
+    .code-fn-name { color: var(--secondary); }
+    .code-comment { color: #555048; font-size: 0.72rem; line-height: 1.8; padding-left: 1rem; margin-top: 0.25rem; }
+    .code-comment .kw { color: rgba(182,123,230,0.7); }
+    .code-alert {
+      border-left: 2px solid var(--secondary);
+      background: rgba(255,173,3,0.04);
+      padding: 0.625rem 1rem;
+      margin: 1rem 0;
+    }
+    .code-alert .lbl { color: var(--muted-fg); font-size: 0.65rem; letter-spacing: 0.08em; }
+    .code-alert .det { color: var(--body-fg); font-size: 0.72rem; margin-top: 0.25rem; }
+    .code-alert .wrn { color: var(--destructive); font-size: 0.72rem; margin-top: 0.25rem; }
+    .glow-gold { position: absolute; bottom: -1rem; right: -1rem; width: 8rem; height: 8rem; background: var(--secondary); opacity: 0.12; filter: blur(50px); pointer-events: none; }
+    .glow-purple { position: absolute; top: -1rem; left: -1rem; width: 8rem; height: 8rem; background: var(--primary); opacity: 0.12; filter: blur(50px); pointer-events: none; }
+
+    /* RAG SECTION */
+    #rag { background: var(--background); padding: 8rem 2rem; }
+    .section-inner { max-width: 1280px; margin: 0 auto; }
+    .rag-heading {
+      font-size: clamp(64px, 12vw, 192px);
+      font-weight: 900; line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--foreground);
+      margin-bottom: 1.5rem;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .rag-sub {
+      font-size: clamp(1.25rem, 2.5vw, 2rem);
+      font-weight: 400;
+      color: var(--muted-fg);
+      margin-bottom: 6rem;
+      font-style: italic;
+    }
+    .rag-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 8rem; }
+    .rag-col { border-left: 3px solid; padding-left: 2rem; }
+    .rag-col.bad { border-color: rgba(232,64,64,0.5); }
+    .rag-col.good { border-color: var(--primary); }
+    .rag-col-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.1em; margin-bottom: 2rem;
+    }
+    .rag-col.bad .rag-col-label { color: rgba(232,64,64,0.7); }
+    .rag-col.good .rag-col-label { color: var(--primary); }
+    .rag-item { margin-bottom: 2rem; }
+    .rag-item-title { font-size: 1.25rem; font-weight: 600; color: var(--foreground); margin-bottom: 0.375rem; }
+    .rag-item-desc { font-size: 0.9375rem; color: var(--muted-fg); line-height: 1.6; }
+    .rag-col.good .rag-item-desc { color: var(--body-fg); }
+    .rag-col.good .rag-item-desc span { color: var(--secondary); font-style: italic; }
+    .rag-col-footer { margin-top: 3rem; font-size: 0.9375rem; color: var(--muted-fg); }
+    .rag-col-footer strong { color: var(--foreground); font-weight: 600; }
+
+    .rag-cta {
+      max-width: 56rem;
+      background: var(--card);
+      border: 1px solid rgba(255,173,3,0.2);
+      border-top: 2px solid rgba(255,173,3,0.4);
+      padding: 3rem;
+      margin-bottom: 8rem;
+    }
+    .rag-cta-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--foreground);
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .rag-cta-title span { color: var(--secondary); }
+    .rag-divider { height: 1px; background: linear-gradient(to right, rgba(255,173,3,0.3), rgba(182,123,230,0.3), transparent); margin-bottom: 1.5rem; }
+    .rag-cta-body { font-size: 1rem; color: var(--body-fg); line-height: 1.75; margin-bottom: 1.5rem; }
+    .rag-cta-mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8125rem; color: var(--muted-fg);
+    }
+    .rag-cta-mono span { color: var(--primary); }
+
+    .rag-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+    }
+    .rag-stat { background: var(--background-raised); padding: 2rem; }
+    .rag-stat-num {
+      font-size: 3.5rem; font-weight: 900;
+      color: var(--foreground); margin-bottom: 0.75rem;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: -0.02em;
+    }
+    .rag-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted-fg); }
+    .rag-stat-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--primary); margin-top: 0.5rem; opacity: 0.8; }
+
+    footer {
+      background: var(--background);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem; text-align: center;
+    }
+    footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted-fg); }
+
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .code-panel { display: none; }
+      .rag-cols { grid-template-columns: 1fr; }
+      .rag-stats { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      #rag { padding: 4rem 1rem; }
+      .rag-cta { padding: 1.5rem; }
+    }
+  </style>
 </head>
-
 <body>
-    <nav class="navbar">
-        <div class="container nav-content">
-            <div class="logo">
-                <img src="logo.png" alt="QuarkMemory Icon" class="logo-icon">
-                QuarkMemory
-            </div>
-        </div>
-    </nav>
 
-    <header class="hero">
-        <div class="hero-bg-glow"></div>
-        <div class="container hero-content">
-            <img src="logo.png" alt="QuarkMemory Logo" class="hero-logo fade-up"
-                style="max-width: 400px; margin-bottom: 2rem; display: inline-block; mix-blend-mode: screen;">
-            <h1 class="hero-title">The memory layer <br>for <span class="text-gradient">software</span>
-            </h1>
-            <p class="hero-subtitle">quarkmemory builds a continuously evolving understanding of your
-                codebase, synthesizing code, documentation, and history to map how your system works,
-                why it evolved that way, and what that means when you change it.</p>
-            <div class="hero-cta">
-                <a href="#contact" class="btn btn-primary btn-large">Book a Demo</a>
-            </div>
-        </div>
-    </header>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo mono">QM</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="capabilities.html">Capabilities</a>
+    </div>
+  </div>
+</nav>
 
-    <section id="contact" class="section">
-        <div class="container contact-container fade-up">
-            <div class="contact-content">
-                <h2>Want to build with context?</h2>
-                <p>Join the race to dynamically context-aware coding agents.</p>
-            </div>
-            <form class="contact-form"
-                onsubmit="event.preventDefault(); alert('We will definitely be in touch soon!');">
-                <input type="email" placeholder="Enter your work email" required class="input-field">
-                <button type="submit" class="btn btn-primary btn-submit">Book a Demo</button>
-            </form>
-        </div>
-    </section>
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-blob-purple"></div>
+  <div class="hero-blob-gold"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-label mono">$ cat /dev/quarkmemory</div>
+      <h1 class="hero-h1">
+        <span class="line line-white">EVERY</span>
+        <span class="line line-purple">DECISION</span>
+        <span class="line line-gold">ATTACHED</span>
+      </h1>
+      <div class="hero-text">
+        <p class="muted">
+          Every requirement in your PRDs is a <span class="mono">quark</span>. Every function in your codebase is a <span class="mono">quark</span>. Every customer ticket, tech doc, design, user story is a <span class="mono">quark</span> — tiny, powerful, but constantly changing state: lacking in memory of how they develop.
+        </p>
+        <p class="big">
+          QuarkMemory gives each one a persistent, evolving memory of every decision that shaped it. Change the code? You instantly see which business rules break. Edit a function? You see every constraint, rationale, and past decision that made it what it is.
+        </p>
+        <p class="accent">
+          We attach decision-aware memory <span>directly</span> to every function.
+        </p>
+      </div>
+    </div>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <p>&copy; 2026 QuarkMemory. All rights reserved.</p>
+    <div class="code-panel">
+      <div class="glow-purple"></div>
+      <div class="glow-gold"></div>
+      <div class="code-panel-label mono">memory.graph</div>
+      <div class="code-block">
+        <div class="code-line">
+          <span class="code-num">01</span>
+          <div>
+            <div style="color:var(--foreground)">function <span class="code-fn-name">processPayment</span>() {</div>
+            <div class="code-comment">
+              <div>// <span class="kw">WHY:</span> PCI-DSS requirement §12.3.4</div>
+              <div>// <span class="kw">CONSTRAINT:</span> Must complete &lt;200ms (SLA)</div>
+              <div>// <span class="kw">DEPENDS_ON:</span> [validateCard, auditLog]</div>
+              <div>// <span class="kw">IMPACTS:</span> [checkout.tsx, invoice.service]</div>
             </div>
+          </div>
         </div>
-    </footer>
+        <div class="code-alert">
+          <div class="lbl">CHANGE DETECTED</div>
+          <div class="det">→ Modified line 47: timeout 200ms → 300ms</div>
+          <div class="wrn">⚠ BREAKS: SLA constraint in ticket #2847</div>
+        </div>
+        <div class="code-line">
+          <span class="code-num">15</span>
+          <div style="color:var(--foreground)">}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script src="script.js"></script>
+<section id="rag">
+  <div class="section-inner">
+    <h2 class="rag-heading">BEYOND RAG</h2>
+    <div class="rag-sub">Here's why we're better.</div>
+
+    <div class="rag-cols">
+      <div class="rag-col bad">
+        <div class="rag-col-label mono">RAG.query()</div>
+        <div class="rag-item"><div class="rag-item-title">Searches, doesn't remember</div><div class="rag-item-desc">Retrieves at query time. Zero persistent memory of decisions.</div></div>
+        <div class="rag-item"><div class="rag-item-title">One-way relationships</div><div class="rag-item-desc">Finds related docs. Can't map impact when you change code.</div></div>
+        <div class="rag-item"><div class="rag-item-title">Context without causality</div><div class="rag-item-desc">Similarity search. No decision lineage or rationale tracking.</div></div>
+        <div class="rag-item"><div class="rag-item-title">Stateless by design</div><div class="rag-item-desc">Every query from zero. Code evolves, understanding doesn't.</div></div>
+        <div class="rag-col-footer">RAG is a <strong>lookup tool</strong></div>
+      </div>
+      <div class="rag-col good">
+        <div class="rag-col-label mono">QuarkMemory.attach()</div>
+        <div class="rag-item"><div class="rag-item-title">Persistent decision memory</div><div class="rag-item-desc">Full history attached to every artifact. Not retrieved — <span>embedded</span>.</div></div>
+        <div class="rag-item"><div class="rag-item-title">Bidirectional impact graph</div><div class="rag-item-desc">Change function → see affected requirements. Both directions, instant.</div></div>
+        <div class="rag-item"><div class="rag-item-title">Decision lineage tracking</div><div class="rag-item-desc">Who decided what, when, why. Full causal chain preserved.</div></div>
+        <div class="rag-item"><div class="rag-item-title">Stateful evolution engine</div><div class="rag-item-desc">Memory evolves with code. Every change updates the graph.</div></div>
+        <div class="rag-col-footer">QuarkMemory is a <strong>living memory system</strong></div>
+      </div>
+    </div>
+
+    <div class="rag-cta">
+      <div class="rag-cta-title">RAG searches.<br><span>QuarkMemory remembers.</span></div>
+      <div class="rag-divider"></div>
+      <p class="rag-cta-body">Every quark in your codebase carries its complete decision lineage. When something changes, you don't search for context. You already have it.</p>
+      <div class="rag-cta-mono mono">That's not retrieval. That's <span>memory</span>.</div>
+    </div>
+
+    <div class="rag-stats">
+      <div class="rag-stat"><div class="rag-stat-num">120ms</div><div class="rag-stat-label mono">Context retrieval time</div><div class="rag-stat-sub mono">Already attached</div></div>
+      <div class="rag-stat"><div class="rag-stat-num">2-way</div><div class="rag-stat-label mono">Impact mapping</div><div class="rag-stat-sub mono">Code ↔ Requirements</div></div>
+      <div class="rag-stat"><div class="rag-stat-num">∞</div><div class="rag-stat-label mono">Decision depth</div><div class="rag-stat-sub mono">Full lineage preserved</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="mono">© 2025 QuarkMemory — Every decision attached.</p>
+</footer>
+
 </body>
-
 </html>
