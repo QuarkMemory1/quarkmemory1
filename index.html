@@ -48,11 +48,9 @@
       display: flex; align-items: center; justify-content: space-between;
     }
     .nav-logo {
-      width: 40px; height: 40px;
-      background: var(--primary);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700; font-size: 14px; color: #0d0c0b;
+      width: 40px;
+      height: 40px;
+      background: url('logo.png') center/cover no-repeat;
     }
     .nav-links { display: flex; align-items: center; gap: 2rem; }
     .nav-links a {
@@ -268,7 +266,7 @@
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo mono">QM</a>
+    <a href="index.html" class="nav-logo"></a>
     <div class="nav-links">
       <a href="index.html" class="active">Home</a>
       <a href="capabilities.html">Capabilities</a>
