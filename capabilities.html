@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,15 +8,24 @@
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,300;1,9..40,400&display=swap"
+    rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     :root {
       --background: #0d0c0b;
-      --background-raised: #131210;
+      --background-raised: rgba(19, 18, 16, 0.5);
       --foreground: #f5f3f0;
-      --card: #1e1c1a;
-      --card-border: #2a2724;
+      --card: rgba(30, 28, 26, 0.5);
+      --card-border: rgba(255, 255, 255, 0.05);
       --primary: #b67be6;
       --secondary: #ffad03;
       --muted-fg: #8a8480;
@@ -23,7 +33,12 @@
       --border: #242220;
       --destructive: #e84040;
     }
-    html { font-size: 16px; scroll-behavior: smooth; }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
     body {
       background: var(--background);
       color: var(--foreground);
@@ -32,41 +47,119 @@
       -moz-osx-font-smoothing: grayscale;
       line-height: 1.5;
     }
-    .mono { font-family: 'JetBrains Mono', monospace; }
-    a { color: inherit; text-decoration: none; }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--background) !important;
+      font-weight: 600;
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--foreground);
+      transform: translateY(-1px);
+    }
+
+    .code-panel,
+    .rag-cta,
+    .rag-stat,
+    .rag-col,
+    .q-card,
+    .highlight-box,
+    .highlight-quote,
+    .cap-card,
+    .cap-integrity-box,
+    .ev-cell {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    .glass-anim {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .glass-anim.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     /* NAV */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-      background: rgba(13,12,11,0.92);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: rgba(13, 12, 11, 0.92);
       backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border);
     }
+
     .nav-inner {
-      max-width: 1280px; margin: 0 auto;
+      max-width: 1280px;
+      margin: 0 auto;
       padding: 1rem 2rem;
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
+
     .nav-logo {
       width: 40px;
       height: 40px;
       background: url('logo.png') center/cover no-repeat;
     }
-    .nav-links { display: flex; align-items: center; gap: 2rem; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
     .nav-links a {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8125rem; color: var(--muted-fg); transition: color 0.15s;
+      font-size: 0.8125rem;
+      color: var(--muted-fg);
+      transition: color 0.15s;
     }
-    .nav-links a:hover, .nav-links a.active { color: var(--foreground); }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--foreground);
+    }
 
     /* PAGE */
-    main { padding: 8rem 2rem 8rem; }
-    .section-inner { max-width: 1280px; margin: 0 auto; }
+    main {
+      padding: 8rem 2rem 8rem;
+    }
+
+    .section-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
     .section-tag {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem; color: var(--muted-fg);
-      margin-bottom: 1.5rem; opacity: 0.7;
+      font-size: 0.7rem;
+      color: var(--muted-fg);
+      margin-bottom: 1.5rem;
+      opacity: 0.7;
     }
+
     .page-heading {
       font-size: clamp(36px, 4.5vw, 64px);
       font-weight: 800;
@@ -76,76 +169,162 @@
       font-family: 'DM Sans', sans-serif;
       letter-spacing: -0.02em;
     }
-    .page-heading span { color: var(--primary); }
+
+    .page-heading span {
+      color: var(--primary);
+    }
 
     /* CAP SECTIONS */
-    .cap-section { margin-top: 5rem; margin-bottom: 7rem; }
-    .cap-num-row { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2.5rem; }
+    .cap-section {
+      margin-top: 5rem;
+      margin-bottom: 7rem;
+    }
+
+    .cap-num-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
     .cap-num {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 1.5rem; font-weight: 700; color: var(--secondary);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--secondary);
       opacity: 0.6;
     }
+
     .cap-section-title {
-      font-size: 1.625rem; font-weight: 700;
+      font-size: 1.625rem;
+      font-weight: 700;
       color: var(--foreground);
       font-family: 'DM Sans', sans-serif;
       letter-spacing: -0.01em;
     }
 
     /* Q cards */
-    .q-cards { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+    .q-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+    }
+
     .q-card {
       background: var(--card);
-      display: grid; grid-template-columns: 1fr 1fr;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
     }
-    .q-card-left { padding: 1.5rem 2rem; }
+
+    .q-card-left {
+      padding: 1.5rem 2rem;
+    }
+
     .q-card-right {
       padding: 1.5rem 2rem;
-      background: rgba(182,123,230,0.03);
+      background: rgba(182, 123, 230, 0.03);
       border-left: 1px solid var(--card-border);
     }
+
     .q-micro {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem; margin-bottom: 0.75rem;
+      font-size: 0.65rem;
+      margin-bottom: 0.75rem;
       letter-spacing: 0.08em;
     }
-    .q-micro.gray { color: var(--muted-fg); }
-    .q-micro.purple { color: rgba(182,123,230,0.6); }
-    .q-question { font-size: 1.0625rem; color: var(--foreground); font-weight: 500; line-height: 1.5; }
-    .q-answer { font-size: 0.9375rem; color: var(--body-fg); line-height: 1.65; }
+
+    .q-micro.gray {
+      color: var(--muted-fg);
+    }
+
+    .q-micro.purple {
+      color: rgba(182, 123, 230, 0.6);
+    }
+
+    .q-question {
+      font-size: 1.0625rem;
+      color: var(--foreground);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .q-answer {
+      font-size: 0.9375rem;
+      color: var(--body-fg);
+      line-height: 1.65;
+    }
 
     /* Highlight box */
     .highlight-box {
       background: var(--card);
       border: 1px solid var(--card-border);
-      border-top: 2px solid rgba(182,123,230,0.4);
+      border-top: 2px solid rgba(182, 123, 230, 0.4);
       padding: 2rem 2.5rem;
     }
+
     .highlight-box p {
-      font-size: 1.0625rem; color: var(--body-fg); line-height: 1.75; margin-bottom: 1.5rem;
+      font-size: 1.0625rem;
+      color: var(--body-fg);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
     }
-    .highlight-box p strong { color: var(--foreground); font-weight: 600; }
+
+    .highlight-box p strong {
+      color: var(--foreground);
+      font-weight: 600;
+    }
+
     .highlight-quote {
       border-left: 3px solid var(--secondary);
       padding: 0.5rem 1.5rem;
     }
+
     .highlight-quote p {
-      font-size: 1.0625rem; color: var(--foreground);
-      margin-bottom: 0; font-weight: 400; line-height: 1.7;
+      font-size: 1.0625rem;
+      color: var(--foreground);
+      margin-bottom: 0;
+      font-weight: 400;
+      line-height: 1.7;
     }
-    .highlight-quote p span { color: var(--secondary); font-style: italic; }
+
+    .highlight-quote p span {
+      color: var(--secondary);
+      font-style: italic;
+    }
 
     /* 3-col */
-    .cap-3cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
-    .cap-card { background: var(--card); padding: 1.75rem; border-top: 2px solid var(--primary); }
+    .cap-3cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .cap-card {
+      background: var(--card);
+      padding: 1.75rem;
+      border-top: 2px solid var(--primary);
+    }
+
     .cap-card-label {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem; color: var(--primary); margin-bottom: 1rem;
+      font-size: 0.75rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
       opacity: 0.8;
     }
-    .cap-card p { font-size: 0.9375rem; color: var(--body-fg); line-height: 1.65; }
-    .cap-card p strong { color: var(--foreground); font-weight: 600; }
+
+    .cap-card p {
+      font-size: 0.9375rem;
+      color: var(--body-fg);
+      line-height: 1.65;
+    }
+
+    .cap-card p strong {
+      color: var(--foreground);
+      font-weight: 600;
+    }
 
     /* Integrity box */
     .cap-integrity-box {
@@ -153,212 +332,324 @@
       border: 1px solid var(--card-border);
       padding: 2rem 2.5rem;
     }
-    .cap-integrity-box > p {
-      font-size: 1.0625rem; color: var(--body-fg); line-height: 1.75; margin-bottom: 2rem;
+
+    .cap-integrity-box>p {
+      font-size: 1.0625rem;
+      color: var(--body-fg);
+      line-height: 1.75;
+      margin-bottom: 2rem;
     }
-    .mono-inline { font-family: 'JetBrains Mono', monospace; color: var(--secondary); font-size: 0.875em; }
-    .integrity-items { display: flex; flex-direction: column; gap: 1.25rem; }
-    .integrity-item { display: flex; align-items: flex-start; gap: 1.25rem; }
+
+    .mono-inline {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--secondary);
+      font-size: 0.875em;
+    }
+
+    .integrity-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .integrity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+
     .integrity-x {
       font-family: 'JetBrains Mono', monospace;
-      color: rgba(232,64,64,0.7); font-size: 1rem;
-      flex-shrink: 0; margin-top: 2px;
+      color: rgba(232, 64, 64, 0.7);
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
     }
-    .integrity-item-title { color: var(--foreground); margin-bottom: 0.25rem; font-weight: 500; }
-    .integrity-item-desc { font-size: 0.9rem; color: var(--muted-fg); line-height: 1.5; }
+
+    .integrity-item-title {
+      color: var(--foreground);
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+    }
+
+    .integrity-item-desc {
+      font-size: 0.9rem;
+      color: var(--muted-fg);
+      line-height: 1.5;
+    }
 
     /* Evolution grid */
     .cap-evolution-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 1px; background: var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
     }
-    .ev-cell { background: var(--background-raised); padding: 2rem 2.5rem; }
-    .ev-cell.full { grid-column: 1 / -1; }
+
+    .ev-cell {
+      background: var(--background-raised);
+      padding: 2rem 2.5rem;
+    }
+
+    .ev-cell.full {
+      grid-column: 1 / -1;
+    }
+
     .ev-label {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem; color: var(--primary); margin-bottom: 0.875rem;
+      font-size: 0.75rem;
+      color: var(--primary);
+      margin-bottom: 0.875rem;
       opacity: 0.8;
     }
-    .ev-cell p { font-size: 0.9375rem; color: var(--body-fg); line-height: 1.65; }
-    .ev-cell p strong { color: var(--foreground); font-weight: 600; }
+
+    .ev-cell p {
+      font-size: 0.9375rem;
+      color: var(--body-fg);
+      line-height: 1.65;
+    }
+
+    .ev-cell p strong {
+      color: var(--foreground);
+      font-weight: 600;
+    }
 
     footer {
       background: var(--background);
       border-top: 1px solid var(--border);
-      padding: 3rem 2rem; text-align: center;
+      padding: 3rem 2rem;
+      text-align: center;
     }
-    footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted-fg); }
+
+    footer p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted-fg);
+    }
 
     @media (max-width: 1024px) {
-      .cap-3cols { grid-template-columns: 1fr; background: none; gap: 1rem; }
-      .cap-evolution-grid { grid-template-columns: 1fr; }
-      .cap-evolution-grid .ev-cell.full { grid-column: auto; }
+      .cap-3cols {
+        grid-template-columns: 1fr;
+        background: none;
+        gap: 1rem;
+      }
+
+      .cap-evolution-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cap-evolution-grid .ev-cell.full {
+        grid-column: auto;
+      }
     }
+
     @media (max-width: 640px) {
-      .q-card { grid-template-columns: 1fr; }
-      .q-card-right { border-left: none; border-top: 1px solid var(--card-border); }
-      main { padding: 6rem 1rem 4rem; }
+      .q-card {
+        grid-template-columns: 1fr;
+      }
+
+      .q-card-right {
+        border-left: none;
+        border-top: 1px solid var(--card-border);
+      }
+
+      main {
+        padding: 6rem 1rem 4rem;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo"></a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="capabilities.html" class="active">Capabilities</a>
-    </div>
-  </div>
-</nav>
-
-<main>
-  <div class="section-inner">
-    <div class="section-tag mono">└── capabilities</div>
-    <h1 class="page-heading">
-      What you can do with<br>
-      <span>decision‑aware context</span>
-    </h1>
-
-    <!-- 01 -->
-    <div class="cap-section">
-      <div class="cap-num-row">
-        <div class="cap-num mono">01</div>
-        <h2 class="cap-section-title">Ask questions that no other system can answer</h2>
-      </div>
-      <div class="q-cards">
-        <div class="q-card">
-          <div class="q-card-left">
-            <div class="q-micro gray mono">QUESTION</div>
-            <div class="q-question">If I change this line, what business rules silently break?</div>
-          </div>
-          <div class="q-card-right">
-            <div class="q-micro purple mono">WHY IT'S IMPOSSIBLE WITHOUT QUARKMEMORY</div>
-            <div class="q-answer">You see every rule mapped to this function, plus inherited rules from callees.</div>
-          </div>
-        </div>
-        <div class="q-card">
-          <div class="q-card-left">
-            <div class="q-micro gray mono">QUESTION</div>
-            <div class="q-question">Does this new PR violate any existing architectural constraint?</div>
-          </div>
-          <div class="q-card-right">
-            <div class="q-micro purple mono">WHY IT'S IMPOSSIBLE WITHOUT QUARKMEMORY</div>
-            <div class="q-answer">The system checks the proposed diff against every constraint attached to affected functions.</div>
-          </div>
-        </div>
-        <div class="q-card">
-          <div class="q-card-left">
-            <div class="q-micro gray mono">QUESTION</div>
-            <div class="q-question">Which security policies depend on this helper function?</div>
-          </div>
-          <div class="q-card-right">
-            <div class="q-micro purple mono">WHY IT'S IMPOSSIBLE WITHOUT QUARKMEMORY</div>
-            <div class="q-answer">Reverse mapping: policy → all functions it governs.</div>
-          </div>
-        </div>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="capabilities.html" class="active">Capabilities</a>
+        <a href="index.html#demo" class="btn-primary">Book a Demo</a>
       </div>
     </div>
+  </nav>
 
-    <!-- 02 -->
-    <div class="cap-section">
-      <div class="cap-num-row">
-        <div class="cap-num mono">02</div>
-        <h2 class="cap-section-title">Make LLMs safe and accountable</h2>
+  <main>
+    <div class="section-inner">
+      <div class="section-tag mono">└── capabilities</div>
+      <h1 class="page-heading">
+        What you can do with<br>
+        <span>decision‑aware context</span>
+      </h1>
+
+      <!-- 01 -->
+      <div class="cap-section">
+        <div class="cap-num-row">
+          <div class="cap-num mono">01</div>
+          <h2 class="cap-section-title">Ask questions that no other system can answer</h2>
+        </div>
+        <div class="q-cards">
+          <div class="q-card">
+            <div class="q-card-left">
+              <div class="q-micro gray mono">QUESTION</div>
+              <div class="q-question">If I change this line, what business rules silently break?</div>
+            </div>
+            <div class="q-card-right">
+              <div class="q-micro purple mono">WHY IT'S IMPOSSIBLE WITHOUT QUARKMEMORY</div>
+              <div class="q-answer">You see every rule mapped to this function, plus inherited rules from callees at the
+                symbol level. We build hard links to the ground truth of your codebase.</div>
+            </div>
+          </div>
+          <div class="q-card">
+            <div class="q-card-left">
+              <div class="q-micro gray mono">QUESTION</div>
+              <div class="q-question">Does this new PR violate any existing architectural constraint?</div>
+            </div>
+            <div class="q-card-right">
+              <div class="q-micro purple mono">WHY IT'S IMPOSSIBLE WITHOUT QUARKMEMORY</div>
+              <div class="q-answer">The system checks the proposed diff against every constraint attached to affected
+                functions, and validates ever-changing rules against the current state.</div>
+            </div>
+          </div>
+          <div class="q-card">
+            <div class="q-card-left">
+              <div class="q-micro gray mono">QUESTION</div>
+              <div class="q-question">Which security policies depend on this helper function?</div>
+            </div>
+            <div class="q-card-right">
+              <div class="q-micro purple mono">WHY IT'S IMPOSSIBLE WITHOUT QUARKMEMORY</div>
+              <div class="q-answer">Reverse mapping of upstream and downstream dependencies: We comprehend how and why a
+                policy governs a function so you don't have to burn tokens by guessing.</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="highlight-box">
-        <p>Not by retrieving docs into a prompt (RAG), but by <strong>injecting decision‑aware context as a hard constraint during generation</strong>.</p>
+
+      <!-- 02 -->
+      <div class="cap-section">
+        <div class="cap-num-row">
+          <div class="cap-num mono">02</div>
+          <h2 class="cap-section-title">Make LLMs safe and accountable</h2>
+        </div>
+        <div class="highlight-box">
+          <p>Not by retrieving docs into a prompt (RAG), but by <strong>injecting decision‑aware context as a hard
+              constraint during generation</strong>. We prioritize in-built relevance, confidence, and temporal
+            validation throughout your memory layer.
+        </div>
         <div class="highlight-quote">
-          <p>When an LLM proposes a change, QuarkMemory evaluates the proposal against every attached decision — business, technical, security — and flags contradictions <span>before code is written</span>.</p>
+          <p>When an LLM proposes a change, QuarkMemory evaluates the proposal against every attached decision —
+            business, technical, security — and flags contradictions <span>before code is written</span>.</p>
         </div>
       </div>
-    </div>
 
-    <!-- 03 -->
-    <div class="cap-section">
-      <div class="cap-num-row">
-        <div class="cap-num mono">03</div>
-        <h2 class="cap-section-title">Turn your codebase into a decision engine</h2>
-      </div>
-      <div class="cap-3cols">
-        <div class="cap-card">
-          <div class="cap-card-label mono">Impact analysis</div>
-          <p>Becomes <strong>decision‑first</strong>, not dependency‑first. You don't just see call graphs. You see which business processes, compliance reports, or architectural invariants are at risk.</p>
+      <!-- 03 -->
+      <div class="cap-section">
+        <div class="cap-num-row">
+          <div class="cap-num mono">03</div>
+          <h2 class="cap-section-title">Turn your codebase into a decision engine</h2>
         </div>
-        <div class="cap-card">
-          <div class="cap-card-label mono">Onboarding</div>
-          <p>Becomes a <strong>conversation with the code</strong>. New engineers ask a function: "What decisions shaped you?" and get a curated, non‑contradictory answer.</p>
-        </div>
-        <div class="cap-card">
-          <div class="cap-card-label mono">Audits</div>
-          <p>Become <strong>instant</strong>. Regulators ask: "Which functions implement GDPR Article 17?" You run a query. No manual mapping.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 04 -->
-    <div class="cap-section">
-      <div class="cap-num-row">
-        <div class="cap-num mono">04</div>
-        <h2 class="cap-section-title">Enforce decision integrity over time</h2>
-      </div>
-      <div class="cap-integrity-box">
-        <p>Because every fact has a lifespan <span class="mono-inline mono">(since/expires)</span> and explicit <span class="mono-inline mono">!supersedes</span> edges, QuarkMemory actively prevents:</p>
-        <div class="integrity-items">
-          <div class="integrity-item">
-            <div class="integrity-x mono">×</div>
-            <div>
-              <div class="integrity-item-title">Silent contradictions</div>
-              <div class="integrity-item-desc">Two facts saying opposite things</div>
-            </div>
+        <div class="cap-3cols">
+          <div class="cap-card">
+            <div class="cap-card-label mono">Impact analysis</div>
+            <p>Becomes <strong>decision‑first</strong>, not dependency‑first. You don't just see call graphs. You see
+              which business processes, compliance reports, or architectural invariants are at risk.</p>
           </div>
-          <div class="integrity-item">
-            <div class="integrity-x mono">×</div>
-            <div>
-              <div class="integrity-item-title">Stale decisions</div>
-              <div class="integrity-item-desc">A rule that expired but code still follows it</div>
-            </div>
+          <div class="cap-card">
+            <div class="cap-card-label mono">Onboarding</div>
+            <p>Becomes a <strong>conversation with the code</strong>. New engineers ask a function: "What decisions
+              shaped
+              you?" and get a curated, non‑contradictory answer.</p>
           </div>
-          <div class="integrity-item">
-            <div class="integrity-x mono">×</div>
-            <div>
-              <div class="integrity-item-title">Forgotten overrides</div>
-              <div class="integrity-item-desc">Someone changed a policy but didn't update code</div>
-            </div>
+          <div class="cap-card">
+            <div class="cap-card-label mono">Audits</div>
+            <p>Become <strong>instant</strong>. Regulators ask: "Which functions implement GDPR Article 17?" You run a
+              split-second query. No tedious manual mapping involved. We have you covered.</p>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- 05 -->
-    <div class="cap-section" style="margin-bottom:0">
-      <div class="cap-num-row">
-        <div class="cap-num mono">05</div>
-        <h2 class="cap-section-title">Evolve your codebase with decision intelligence</h2>
+      <!-- 04 -->
+      <div class="cap-section">
+        <div class="cap-num-row">
+          <div class="cap-num mono">04</div>
+          <h2 class="cap-section-title">Enforce decision integrity over time</h2>
+        </div>
+        <div class="cap-integrity-box">
+          <p>Because every fact has a lifespan <span class="mono-inline mono">(since/expires)</span> and explicit <span
+              class="mono-inline mono">!supersedes</span> edges, QuarkMemory actively prevents:</p>
+          <div class="integrity-items">
+            <div class="integrity-item">
+              <div class="integrity-x mono">×</div>
+              <div>
+                <div class="integrity-item-title">Silent contradictions</div>
+                <div class="integrity-item-desc">Two facts saying opposite things</div>
+              </div>
+            </div>
+            <div class="integrity-item">
+              <div class="integrity-x mono">×</div>
+              <div>
+                <div class="integrity-item-title">Stale decisions</div>
+                <div class="integrity-item-desc">A rule that expired but code still follows it</div>
+              </div>
+            </div>
+            <div class="integrity-item">
+              <div class="integrity-x mono">×</div>
+              <div>
+                <div class="integrity-item-title">Forgotten overrides</div>
+                <div class="integrity-item-desc">Someone changed a policy architecturally but didn't update code
+                  reflecting it.</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="cap-evolution-grid">
-        <div class="ev-cell">
-          <div class="ev-label mono">Refactor</div>
-          <p>QuarkMemory tells you which decisions are <strong>local to a function versus inherited</strong>, so you know what you can change safely.</p>
+
+      <!-- 05 -->
+      <div class="cap-section" style="margin-bottom:0">
+        <div class="cap-num-row">
+          <div class="cap-num mono">05</div>
+          <h2 class="cap-section-title">Evolve your codebase with decision intelligence</h2>
         </div>
-        <div class="ev-cell">
-          <div class="ev-label mono">Deprecate</div>
-          <p>When you deprecate a business rule, you see <strong>exactly which functions need attention</strong>.</p>
-        </div>
-        <div class="ev-cell full">
-          <div class="ev-label mono">Propose ADR</div>
-          <p>When you propose a new architectural ADR, you can <strong>simulate its impact across all functions before writing a line</strong>.</p>
+        <div class="cap-evolution-grid">
+          <div class="ev-cell">
+            <div class="ev-label mono">Refactor</div>
+            <p>QuarkMemory tells you which decisions are <strong>local to a function versus inherited</strong>, so you
+              know what you can change safely without throwing your codebase to the stone age.</p>
+          </div>
+          <div class="ev-cell">
+            <div class="ev-label mono">Deprecate</div>
+            <p>When you deprecate a business rule, you see <strong>exactly why each entity needs attention</strong>, not
+              just a function list.</p>
+          </div>
+          <div class="ev-cell full">
+            <div class="ev-label mono">Propose ADR</div>
+            <p>When you propose a new ADR, you can <strong>internalize its impact across all code before writing a
+                single
+                line of code</strong>.</p>
+          </div>
         </div>
       </div>
+
     </div>
+  </main>
 
-  </div>
-</main>
+  <footer>
+    <p class="mono">© 2026 QuarkMemory — All rights reserved.</p>
+  </footer>
 
-<footer>
-  <p class="mono">© 2025 QuarkMemory — Every decision attached.</p>
-</footer>
-
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cards = document.querySelectorAll('.code-panel, .rag-cta, .rag-stat, .rag-col, .q-card, .highlight-box, .highlight-quote, .cap-card, .cap-integrity-box, .ev-cell');
+      cards.forEach(el => el.classList.add('glass-anim'));
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { threshold: 0.1 });
+      cards.forEach(el => observer.observe(el));
+    });
+  </script>
 </body>
+
 </html>
