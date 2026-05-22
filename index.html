@@ -569,6 +569,89 @@
       opacity: 0.8;
     }
 
+    /* SOURCES SECTION */
+    .sources-section {
+      margin-bottom: 8rem;
+    }
+
+    .sources-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--foreground);
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .sources-subtitle {
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      color: var(--muted-fg);
+      margin-bottom: 3.5rem;
+      max-width: 800px;
+    }
+
+    .sources-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .source-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      padding: 2.25rem 2rem;
+      border-radius: 8px;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .source-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--secondary), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .source-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 173, 3, 0.2);
+      box-shadow: 0 12px 30px 0 rgba(255, 173, 3, 0.05);
+    }
+
+    .source-card:hover::before {
+      opacity: 1;
+    }
+
+    .source-card-icon {
+      font-size: 1.5rem;
+      color: var(--secondary);
+      margin-bottom: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .source-card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--foreground);
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .source-card-desc {
+      font-size: 0.9rem;
+      color: var(--body-fg);
+      line-height: 1.6;
+    }
+
     footer {
       background: var(--background);
       border-top: 1px solid var(--border);
@@ -603,6 +686,10 @@
       .rag-stats {
         grid-template-columns: 1fr;
       }
+
+      .sources-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media (max-width: 640px) {
@@ -612,6 +699,10 @@
 
       .rag-cta {
         padding: 1.5rem;
+      }
+
+      .sources-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -700,8 +791,22 @@
 
   <section id="rag">
     <div class="section-inner">
-      <h2 class="rag-heading">BEYOND RAG</h2>
-      <div class="rag-sub">No more aimless vibecoding. It's time to build smart.</div>
+      <!-- Institutional Memory is Broken Panel -->
+      <div class="broken-memory-panel" style="margin-bottom: 8rem; position: relative;">
+        <h2 class="rag-heading" style="font-size: clamp(48px, 8vw, 110px); color: var(--foreground); line-height: 1.1; margin-bottom: 2rem;">
+          INSTITUTIONAL<br>MEMORY IS <span style="color: var(--destructive); text-shadow: 0 0 40px rgba(232, 64, 64, 0.25);">BROKEN</span>
+        </h2>
+        <div class="rag-sub" style="font-size: clamp(1.25rem, 2.5vw, 1.8rem); line-height: 1.6; max-width: 950px; color: var(--body-fg); font-style: normal; margin-bottom: 2rem;">
+          In software, documentation competes with shipping. <span style="color: var(--destructive); font-weight: 600;">Documentation loses.</span><br>
+          A faster path to search a stale corpus that doesn't know it's wrong is <span class="mono" style="color: var(--secondary); font-weight: 700; text-transform: uppercase;">NOT</span> institutional memory.
+        </div>
+      </div>
+
+      <!-- Beyond RAG Panel -->
+      <div class="beyond-rag-panel" style="margin-bottom: 6rem; border-top: 1px solid var(--border); padding-top: 6rem;">
+        <h2 class="rag-heading">BEYOND RAG</h2>
+        <div class="rag-sub">It's time to build smart.</div>
+      </div>
 
       <div class="rag-cols">
         <div class="rag-col bad">
@@ -766,6 +871,45 @@
         <div class="rag-cta-mono mono">That's not retrieval. That's <span>memory</span>.</div>
       </div>
 
+      <!-- Memory Across Multiple Sources Section -->
+      <div class="sources-section">
+        <h3 class="sources-title">Memory Across Multiple Sources</h3>
+        <p class="sources-subtitle">We ingest every artifact produced during the Software Development Life Cycle (SDLC) to construct a coherent, decision-aware context layer.</p>
+        
+        <div class="sources-grid">
+          <div class="source-card">
+            <div class="source-card-icon mono">// requirements</div>
+            <h4 class="source-card-title">Requirements</h4>
+            <p class="source-card-desc">PRDs, UX Designs, and Sales Docs</p>
+          </div>
+          <div class="source-card">
+            <div class="source-card-icon mono">// implementation</div>
+            <h4 class="source-card-title">Implementation</h4>
+            <p class="source-card-desc">Source Code and Technical Specs</p>
+          </div>
+          <div class="source-card">
+            <div class="source-card-icon mono">// validation</div>
+            <h4 class="source-card-title">Validation</h4>
+            <p class="source-card-desc">Manual and Automated Test Cases</p>
+          </div>
+          <div class="source-card">
+            <div class="source-card-icon mono">// sales & gtm</div>
+            <h4 class="source-card-title">Sales & GTM</h4>
+            <p class="source-card-desc">RFPs and Customer Sales Docs</p>
+          </div>
+          <div class="source-card">
+            <div class="source-card-icon mono">// post-launch</div>
+            <h4 class="source-card-title">Post-Launch</h4>
+            <p class="source-card-desc">Support Tickets and Feedback</p>
+          </div>
+          <div class="source-card">
+            <div class="source-card-icon mono">// continuity</div>
+            <h4 class="source-card-title">Continuity</h4>
+            <p class="source-card-desc">Real-time updates as work happens.</p>
+          </div>
+        </div>
+      </div>
+
       <div class="rag-stats">
         <div class="rag-stat">
           <div class="rag-stat-num">120ms</div>
@@ -808,7 +952,7 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const cards = document.querySelectorAll('.code-panel, .rag-cta, .rag-stat, .rag-col, .q-card, .highlight-box, .highlight-quote, .cap-card, .cap-integrity-box, .ev-cell');
+      const cards = document.querySelectorAll('.code-panel, .rag-cta, .rag-stat, .rag-col, .q-card, .highlight-box, .highlight-quote, .cap-card, .cap-integrity-box, .ev-cell, .broken-memory-panel, .beyond-rag-panel, .source-card');
       cards.forEach(el => el.classList.add('glass-anim'));
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
