@@ -569,6 +569,58 @@
       opacity: 0.8;
     }
 
+    /* BROKEN MEMORY PANEL */
+    .broken-memory-panel {
+      margin-bottom: 8rem;
+      position: relative;
+      background: linear-gradient(135deg, rgba(232, 64, 64, 0.08) 0%, rgba(13, 12, 11, 0.8) 50%, rgba(232, 64, 64, 0.02) 100%);
+      border: 1px solid rgba(232, 64, 64, 0.20);
+      border-left: 4px solid var(--destructive);
+      padding: 4rem 3.5rem;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 4rem;
+      align-items: center;
+      border-radius: 12px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+    }
+
+    .broken-memory-panel::after {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(232, 64, 64, 0.08) 0%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .broken-terminal {
+      background: rgba(10, 9, 8, 0.95);
+      border: 1px solid rgba(232, 64, 64, 0.3);
+      border-radius: 8px;
+      padding: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+      position: relative;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    @keyframes pulse-icon {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.15); opacity: 0.7; }
+    }
+
     /* SOURCES SECTION */
     .sources-section {
       margin-bottom: 8rem;
@@ -596,16 +648,19 @@
     }
 
     .source-card {
-      background: var(--card);
       border: 1px solid var(--card-border);
       padding: 2.25rem 2rem;
-      border-radius: 8px;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      border-radius: 12px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       height: 100%;
+      background: rgba(30, 28, 26, 0.35);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     }
 
     .source-card::before {
@@ -614,16 +669,41 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, var(--secondary), transparent);
+      height: 3px;
       opacity: 0;
-      transition: opacity 0.3s;
+      transition: opacity 0.3s ease;
     }
 
-    .source-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(255, 173, 3, 0.2);
-      box-shadow: 0 12px 30px 0 rgba(255, 173, 3, 0.05);
+    .source-card.gold-tint {
+      background: radial-gradient(circle at 10% 10%, rgba(255, 173, 3, 0.08) 0%, rgba(30, 28, 26, 0.4) 50%, rgba(13, 12, 11, 0.9) 100%);
+      border: 1px solid rgba(255, 173, 3, 0.12);
+    }
+
+    .source-card.gold-tint::before {
+      background: linear-gradient(90deg, var(--secondary), transparent);
+    }
+
+    .source-card.gold-tint:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 173, 3, 0.4);
+      background: radial-gradient(circle at 10% 10%, rgba(255, 173, 3, 0.15) 0%, rgba(30, 28, 26, 0.5) 60%, rgba(13, 12, 11, 0.95) 100%);
+      box-shadow: 0 20px 40px 0 rgba(255, 173, 3, 0.08);
+    }
+
+    .source-card.purple-tint {
+      background: radial-gradient(circle at 10% 10%, rgba(182, 123, 230, 0.08) 0%, rgba(30, 28, 26, 0.4) 50%, rgba(13, 12, 11, 0.9) 100%);
+      border: 1px solid rgba(182, 123, 230, 0.12);
+    }
+
+    .source-card.purple-tint::before {
+      background: linear-gradient(90deg, var(--primary), transparent);
+    }
+
+    .source-card.purple-tint:hover {
+      transform: translateY(-5px);
+      border-color: rgba(182, 123, 230, 0.4);
+      background: radial-gradient(circle at 10% 10%, rgba(182, 123, 230, 0.15) 0%, rgba(30, 28, 26, 0.5) 60%, rgba(13, 12, 11, 0.95) 100%);
+      box-shadow: 0 20px 40px 0 rgba(182, 123, 230, 0.08);
     }
 
     .source-card:hover::before {
@@ -689,6 +769,12 @@
 
       .sources-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .broken-memory-panel {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 3rem 2rem;
       }
     }
 
@@ -792,13 +878,43 @@
   <section id="rag">
     <div class="section-inner">
       <!-- Institutional Memory is Broken Panel -->
-      <div class="broken-memory-panel" style="margin-bottom: 8rem; position: relative;">
-        <h2 class="rag-heading" style="font-size: clamp(48px, 8vw, 110px); color: var(--foreground); line-height: 1.1; margin-bottom: 2rem;">
-          INSTITUTIONAL<br>MEMORY IS <span style="color: var(--destructive); text-shadow: 0 0 40px rgba(232, 64, 64, 0.25);">BROKEN</span>
-        </h2>
-        <div class="rag-sub" style="font-size: clamp(1.25rem, 2.5vw, 1.8rem); line-height: 1.6; max-width: 950px; color: var(--body-fg); font-style: normal; margin-bottom: 2rem;">
-          In software, documentation competes with shipping. <span style="color: var(--destructive); font-weight: 600;">Documentation loses.</span><br>
-          A faster path to search a stale corpus that doesn't know it's wrong is <span class="mono" style="color: var(--secondary); font-weight: 700; text-transform: uppercase;">NOT</span> institutional memory.
+      <div class="broken-memory-panel">
+        <div>
+          <h2 class="rag-heading" style="font-size: clamp(38px, 5.5vw, 72px); color: var(--foreground); line-height: 1.05; margin-bottom: 1.5rem; letter-spacing: -0.04em;">
+            INSTITUTIONAL<br>MEMORY IS <span style="background: linear-gradient(135deg, #ff6b6b, var(--destructive)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 40px rgba(232, 64, 64, 0.15);">BROKEN</span>
+          </h2>
+          <div class="rag-sub" style="font-size: clamp(1.1rem, 1.8vw, 1.35rem); line-height: 1.65; color: var(--body-fg); font-style: normal; margin-bottom: 0;">
+            In software, documentation competes with shipping. <span style="color: var(--destructive); font-weight: 600; text-shadow: 0 0 10px rgba(232, 64, 64, 0.15);">Documentation loses.</span><br>
+            A faster path to search a stale corpus that doesn't know it's wrong is <span class="mono" style="color: var(--secondary); font-weight: 700; text-transform: uppercase;">NOT</span> institutional memory.
+          </div>
+        </div>
+        
+        <!-- Terminal Mockup -->
+        <div class="broken-terminal">
+          <!-- Top bar -->
+          <div style="display: flex; gap: 8px; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.75rem; justify-content: flex-start; align-items: center;">
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: var(--destructive); display: inline-block; box-shadow: 0 0 8px rgba(232,64,64,0.4);"></span>
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: var(--secondary); display: inline-block; box-shadow: 0 0 8px rgba(255,173,3,0.4);"></span>
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: #40c057; display: inline-block; box-shadow: 0 0 8px rgba(64,192,87,0.4);"></span>
+            <span style="color: var(--muted-fg); font-size: 0.7rem; margin-left: 0.5rem; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace;">stale-check.sh</span>
+          </div>
+          <div style="color: var(--muted-fg); margin-bottom: 0.75rem; font-size: 0.8rem;">$ npm run check-knowledge</div>
+          <div style="color: #ffe066; margin-bottom: 0.75rem; font-size: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span style="display: inline-block; animation: pulse-icon 1.5s infinite; color: var(--secondary);">⚠️</span> Analyzing repository docs...
+          </div>
+          <div style="margin-bottom: 0.4rem; font-size: 0.75rem; line-height: 1.5; color: #ff8787;">
+            <span style="background: rgba(232,64,64,0.15); color: var(--destructive); padding: 1px 6px; border-radius: 3px; font-weight: 600; margin-right: 6px;">ERR</span> auth.py: db_helper docs refer to obsolete v1 connection pools.
+          </div>
+          <div style="margin-bottom: 0.4rem; font-size: 0.75rem; line-height: 1.5; color: #ff8787;">
+            <span style="background: rgba(232,64,64,0.15); color: var(--destructive); padding: 1px 6px; border-radius: 3px; font-weight: 600; margin-right: 6px;">ERR</span> gateway.ts: docstring describes deprecated rate limit headers.
+          </div>
+          <div style="margin-bottom: 0.8rem; font-size: 0.75rem; line-height: 1.5; color: #ff8787;">
+            <span style="background: rgba(232,64,64,0.15); color: var(--destructive); padding: 1px 6px; border-radius: 3px; font-weight: 600; margin-right: 6px;">ERR</span> 14 stale decisions found.
+          </div>
+          <div style="color: var(--destructive); font-weight: 700; border-top: 1px dashed rgba(232, 64, 64, 0.3); padding-top: 0.75rem; font-size: 0.8rem; letter-spacing: 0.05em; display: flex; justify-content: space-between; align-items: center;">
+            <span>STATUS: KNOWLEDGE BROKEN</span>
+            <span style="width: 8px; height: 14px; background: var(--destructive); display: inline-block; animation: blink 1s step-end infinite;"></span>
+          </div>
         </div>
       </div>
 
@@ -877,33 +993,33 @@
         <p class="sources-subtitle">We ingest every artifact produced during the Software Development Life Cycle (SDLC) to construct a coherent, decision-aware context layer.</p>
         
         <div class="sources-grid">
-          <div class="source-card">
-            <div class="source-card-icon mono">// requirements</div>
+          <div class="source-card gold-tint">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--secondary); margin-bottom: 1.25rem;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
             <h4 class="source-card-title">Requirements</h4>
             <p class="source-card-desc">PRDs, UX Designs, and Sales Docs</p>
           </div>
-          <div class="source-card">
-            <div class="source-card-icon mono">// implementation</div>
+          <div class="source-card purple-tint">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary); margin-bottom: 1.25rem;"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
             <h4 class="source-card-title">Implementation</h4>
             <p class="source-card-desc">Source Code and Technical Specs</p>
           </div>
-          <div class="source-card">
-            <div class="source-card-icon mono">// validation</div>
+          <div class="source-card gold-tint">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--secondary); margin-bottom: 1.25rem;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
             <h4 class="source-card-title">Validation</h4>
             <p class="source-card-desc">Manual and Automated Test Cases</p>
           </div>
-          <div class="source-card">
-            <div class="source-card-icon mono">// sales & gtm</div>
+          <div class="source-card purple-tint">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary); margin-bottom: 1.25rem;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
             <h4 class="source-card-title">Sales & GTM</h4>
             <p class="source-card-desc">RFPs and Customer Sales Docs</p>
           </div>
-          <div class="source-card">
-            <div class="source-card-icon mono">// post-launch</div>
+          <div class="source-card gold-tint">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--secondary); margin-bottom: 1.25rem;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
             <h4 class="source-card-title">Post-Launch</h4>
             <p class="source-card-desc">Support Tickets and Feedback</p>
           </div>
-          <div class="source-card">
-            <div class="source-card-icon mono">// continuity</div>
+          <div class="source-card purple-tint">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary); margin-bottom: 1.25rem;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
             <h4 class="source-card-title">Continuity</h4>
             <p class="source-card-desc">Real-time updates as work happens.</p>
           </div>
