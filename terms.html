@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuarkMemory — Terms of Service</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,300;1,9..40,400&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --background: #0d0c0b;
+      --foreground: #f5f3f0;
+      --primary: #b67be6;
+      --secondary: #ffad03;
+      --muted-fg: #8a8480;
+      --body-fg: #c8c4be;
+      --border: #242220;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--foreground);
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.6;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--background) !important;
+      font-weight: 600;
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--foreground);
+      transform: translateY(-1px);
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: rgba(13, 12, 11, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      width: 40px;
+      height: 40px;
+      background: url('logo.png') center/cover no-repeat;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8125rem;
+      color: var(--muted-fg);
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--foreground);
+    }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 7rem 2rem 4rem;
+    }
+
+    .terms-label {
+      font-size: 0.75rem;
+      color: var(--secondary);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .terms-intro {
+      color: var(--body-fg);
+      font-size: 1.05rem;
+      margin-bottom: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .terms-intro p + p {
+      margin-top: 1rem;
+    }
+
+    .terms-section {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .terms-section:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--foreground);
+      margin-bottom: 1.25rem;
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--foreground);
+      margin-top: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p,
+    li {
+      color: var(--body-fg);
+      font-size: 0.95rem;
+    }
+
+    p + p {
+      margin-top: 0.75rem;
+    }
+
+    dl {
+      margin-top: 0.75rem;
+    }
+
+    dt {
+      font-weight: 600;
+      color: var(--foreground);
+      margin-top: 1rem;
+    }
+
+    dt:first-child {
+      margin-top: 0;
+    }
+
+    dd {
+      color: var(--body-fg);
+      font-size: 0.95rem;
+      margin-left: 0;
+      margin-top: 0.35rem;
+    }
+
+    ul {
+      margin-top: 0.75rem;
+      padding-left: 1.25rem;
+    }
+
+    li + li {
+      margin-top: 0.5rem;
+    }
+
+    .terms-contact a {
+      color: var(--primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .terms-contact a:hover {
+      color: var(--foreground);
+    }
+
+    footer {
+      background: var(--background);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    footer p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted-fg);
+    }
+
+    footer a {
+      color: var(--muted-fg);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.15s;
+    }
+
+    footer a:hover {
+      color: var(--foreground);
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding: 6rem 1.25rem 3rem;
+      }
+
+      .nav-links {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="QuarkMemory home"></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="capabilities.html">Capabilities</a>
+        <a href="about.html">About</a>
+        <a href="index.html#demo" class="btn-primary">Book a Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="terms-label mono">└── legal</div>
+    <h1>Terms of Service</h1>
+
+    <div class="terms-intro">
+      <p>Welcome to QuarkMemory. Please read these Terms of Service (“Terms”) carefully. These Terms form a binding legal agreement between QuarkMemory (“QuarkMemory,” “we,” “us,” or “our”) and the entity or organization accessing or utilizing our platform (“Customer,” “User,” “you,” or “your”).</p>
+      <p>By executing an individual/corporate Order Form that references these Terms, or by accessing, configuring, or utilizing any of QuarkMemory’s utilities, software and agentic product features, APIs, or documentation (collectively, the “Service”), you explicitly agree to be bound by these Terms.</p>
+      <p>If you are entering into these Terms on behalf of a company, corporate enterprise, or agency, you represent and warrant that you possess the full legal authority to bind that entity to these provisions. If you do not agree to these Terms, you are strictly prohibited from accessing or using the Service.</p>
+    </div>
+
+    <section class="terms-section">
+      <h2>1. Definitions</h2>
+      <dl>
+        <dt>Active Documents Under Management</dt>
+        <dd>the total cumulative volume of distinct, unformatted product requirement documents (PRDs), engineering specification sheets, user stories, internal wiki files, or architectural manifests actively ingested, maintained, and mapped within Customer’s active Service dashboard/fact graph repository.</dd>
+        <dt>Customer Data</dt>
+        <dd>any raw text, files, code, documentation templates, filenames, structural schematics, or other digital assets provided, uploaded, or transmitted to the Service by Customer or its Authorized Users.</dd>
+        <dt>System Graph Outputs</dt>
+        <dd>the dependency maps, contradiction logs, entity resolution matrices, logic flaw reports, and cross-document structural analysis reports programmatically generated for Customer by the Service.</dd>
+        <dt>Order Form</dt>
+        <dd>a printed form in the capacity of a commercial invoice, reflecting Customer’s request for purchase of Service, and its associated terms.</dd>
+      </dl>
+    </section>
+
+    <section class="terms-section">
+      <h2>2. Provision and Access to the Service</h2>
+      <h3>Access Rights</h3>
+      <p>Subject to complete compliance with these Terms and the timely payment of all applicable subscription fees, QuarkMemory grants Customer a non-exclusive, non-transferable, non-sublicensable, revocable right during the applicable Subscription Term to access and use the Service solely for internal business operations as they relate to the development of Customer’s software product.</p>
+      <h3>Authorized Users</h3>
+      <p>Customer may permit designated employees, engineers, consultants, or contractors (“Authorized Users”) to access the Service workspace. Customer is fully liable for all actions, access requests, or policy violations committed by its Authorized Users.</p>
+      <h3>Credential Protection</h3>
+      <p>Customer is solely responsible for maintaining the absolute confidentiality of all administrative and user credentials. Customer must immediately notify QuarkMemory of any suspected system intrusion, compromised API keys, or unauthorized credential usage.</p>
+    </section>
+
+    <section class="terms-section">
+      <h2>3. Subscription Plans, Billing, and Commercial Terms</h2>
+      <h3>Invoicing and Payments</h3>
+      <p>Customer shall be billed periodically in advance (monthly or annually as specified in the Order Form). All fees are stated in United States Dollars ($ USD) and are entirely non-refundable, non-cancelable, and exclusive of any applicable federal, state, or local sales and consumption taxes.</p>
+      <h3>Late Payments</h3>
+      <p>Overdue balances are subject to the lower of a late fee of 1.5% per month and the maximum rate permitted by law. QuarkMemory explicitly reserves the right to restrict access, deactivate integrations, or suspend the Service environment if any invoice remains unpaid for more than ten (10) calendar days past its due date.</p>
+      <h3>Tier Scaling</h3>
+      <p>If the volume of Active Documents Under Management or the ingestion processing demands exceed the maximum allocation defined by Customer’s current subscription plan, Customer will be automatically notified of their usage limit for said plan, followed by which Customer must transition to the next adjacent service tier and will be billed accordingly, or subject to standard overage rates, should Customer continue to avail Service.</p>
+    </section>
+
+    <section class="terms-section">
+      <h2>4. Intellectual Property and Proprietary Rights</h2>
+      <h3>Customer Data</h3>
+      <p>Customer retains all right, title, and ownership in Customer Data. Customer grants QuarkMemory a limited, worldwide, royalty-free, non-exclusive license to ingest, host, cache, parse, process, and create derivative works from Customer Data solely to (a) provide, maintain, optimize, and support the Service for Customer, including generating System Graph Outputs, and (b) create Aggregated Data as permitted below.</p>
+      <h3>Platform</h3>
+      <p>QuarkMemory owns all right, title, and interest in the Platform, including without limitation the parsing logic, source code, ontology, graph schema, temporal-reasoning and entity-resolution algorithms, tokenization engines, vector indexing pipelines, user interface, and all derivative works and improvements thereto. No implied licenses are granted.</p>
+      <h3>System Graph Outputs</h3>
+      <p>As between the parties, Customer owns the System Graph Outputs generated for Customer from Customer Data. QuarkMemory's ownership of the Platform—including the methods, schema, and node and edge structures used to generate Outputs—is not affected by Customer's ownership of the Outputs, and Customer obtains no right, title, or license in the Platform itself by virtue of owning the Outputs.</p>
+      <h3>Aggregated Data</h3>
+      <p>QuarkMemory may create, own, and use Aggregated Data to operate, analyze, and improve the Service, provided that QuarkMemory does not distribute Aggregated Data in any form that identifies Customer or reveals Customer Data or Customer's System Graph Outputs.</p>
+    </section>
+
+    <section class="terms-section">
+      <h2>5. Data Security, Privacy, and AI Compliance</h2>
+      <h3>Security Standards</h3>
+      <p>QuarkMemory shall maintain rigorous, industry-standard administrative, physical, and technical safeguards designed to protect the confidentiality, integrity, and operational availability of Customer Data.</p>
+      <h3>No Third-Party Model Training on Customer Data</h3>
+      <p>QuarkMemory explicitly guarantees that it does not use, lease, sell, or leverage proprietary Customer Data or source code repositories to train, refine, or optimize public machine learning models or general large language models (LLMs) for third-party access.</p>
+      <h3>Disclaimer</h3>
+      <p>QuarkMemory may use Aggregated Data (de-identified, non-revealing) to improve the Service, and separately will not use Customer Data or System Graph Outputs in identifiable form to train models exposed to other customers or third parties (see Section 4).</p>
+      <h3>Telemetry Data</h3>
+      <p>QuarkMemory reserves every right to collect anonymous telemetry and system metadata (such as system error rates, API latency, ingestion document counts, and interface clickstreams) to ensure platform stability, prevent service degradation, and enforce billing tier accuracy.</p>
+    </section>
+
+    <section class="terms-section">
+      <h2>6. Acceptable Use Restrictions</h2>
+      <p>Customer agrees that it will not, and will not permit any third party or Authorized User to:</p>
+      <ul>
+        <li>Reverse engineer, decompile, disassemble, translate, or attempt to extract the source code, underlying weights, or structural schemas of the QuarkMemory platform;</li>
+        <li>Circumvent, disable, or bypass any volumetric tier thresholds, security mechanisms, or rate-limiting protocols enforced by the Service;</li>
+        <li>Utilize automated scripts, scrapers, or continuous batch programmatic inputs to overload the document parsing infrastructure;</li>
+        <li>Upload or process any text or code assets containing malicious payload scripts, trojans, or software elements designed to degrade third-party cloud infrastructure;</li>
+        <li>Use benchmarks derived from the Service outputs to train or construct a competitive automated requirements verification or dependency mapping tool.</li>
+      </ul>
+    </section>
+
+    <section class="terms-section">
+      <h2>7. Upstream Third-Party LLM and Computational Disclaimers</h2>
+      <h3>Third-Party Model Dependencies</h3>
+      <p>Customer acknowledges that the Service relies fundamentally on upstream third-party artificial intelligence foundation models and API computational pipelines (the “Upstream Providers”).</p>
+      <h3>Service Interruption</h3>
+      <p>QuarkMemory shall not be held liable or responsible for any platform latency, parsing degradation, output quality worsening, or temporary system unavailability directly caused by upstream provider API outages, structural API deprecations, rate-limiting throttling, or foundational cloud infrastructure failures beyond QuarkMemory's direct operational control.</p>
+    </section>
+
+    <section class="terms-section">
+      <h2>8. Warranties and Disclaimers</h2>
+      <h3>Service Performance</h3>
+      <p>QuarkMemory warrants that the Service will operate in substantial accordance with our official enterprise documentation under normal operational parameters. Customer's sole remedy for a breach of this warranty shall be for QuarkMemory to make commercially reasonable efforts to correct or patch the structural non-conformity.</p>
+      <h3>General Disclaimer</h3>
+      <p>EXCEPT AS EXPLICITLY PROVIDED HEREIN, THE SERVICE IS DELIVERED "AS IS" AND "AS AVAILABLE." QUARKMEMORY DISCLAIMS ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING WITHOUT LIMITATION ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, OR NON-INFRINGEMENT. QUARKMEMORY DOES NOT WARRANT THAT THE SERVICE WILL BE COMPLETELY ERROR-FREE, SECURE, UNINTERRUPTED, OR THAT THE CONTRADICTION IDENTIFICATION ALGORITHMS WILL DISCOVER EVERY LOGICAL ERROR EXISTING WITHIN CUSTOMER'S ENTERPRISE DOCUMENTATION.</p>
+    </section>
+
+    <section class="terms-section">
+      <h2>9. Limitation of Liability</h2>
+      <h3>Exclusion of Consequential Damages</h3>
+      <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL QUARKMEMORY BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, PUNITIVE, OR CONSEQUENTIAL DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, LOSS OF REVENUE, LOSS OF BUSINESS OPPORTUNITY, REPUTATIONAL DAMAGE, ENTERPRISE DATA CORRUPTION, OR SYSTEM INACCURACY COSTS, HOWEVER CAUSED AND UNDER ANY THEORY OF LIABILITY, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
+      <h3>Total Liability Cap</h3>
+      <p>QUARKMEMORY’S AGGREGATE FINANCIAL LIABILITY FOR ALL CLAIMS ARISING OUT OF OR RELATED TO THESE TERMS, WHETHER IN CONTRACT, TORT, OR UNDER ANY OTHER LEGAL THEORY, SHALL NOT EXCEED THE TOTAL CUMULATIVE FEES ACTUALLY PAID BY CUSTOMER TO QUARKMEMORY IN THE TWELVE (12) MONTH PERIOD PRECEDING THE INCIDENT GIVING RISE TO LIABILITY.</p>
+    </section>
+
+    <section class="terms-section">
+      <h2>10. Mutual Indemnification</h2>
+      <h3>By QuarkMemory</h3>
+      <p>QuarkMemory shall defend Customer against any third-party claim or lawsuit alleging that the core Service infrastructure directly infringes a valid United States patent or copyright, and shall indemnify Customer for any final damages awarded by a court of competent jurisdiction, provided that Customer gives immediate written notice, grants absolute control of the defense to QuarkMemory, and fully cooperates.</p>
+      <h3>By Customer</h3>
+      <p>Customer shall defend, indemnify, and hold harmless QuarkMemory and its officers, directors, and engineers from any third-party claims, liabilities, or regulatory actions arising out of or related to (i) any unauthorized use or deployment of Customer Data, (ii) a material breach of Section 6 (Acceptable Use Restrictions), or (iii) violations of applicable global data privacy statutes committed by Authorized Users.</p>
+    </section>
+
+    <section class="terms-section">
+      <h2>11. Term and Termination</h2>
+      <h3>Subscription Term</h3>
+      <p>These Terms remain effective for the entire duration of the initial subscription term and any subsequent renewal cycles detailed inside the signed individual/corporate Order Form.</p>
+      <h3>Termination for Cause</h3>
+      <p>Either party may terminate these Terms immediately upon written notice if the other party (i) commits a material breach of these Terms and fails to cure such breach within thirty (30) days from receiving a formal, written notice of non-compliance, or (ii) becomes the subject of a petition in bankruptcy or insolvency proceedings.</p>
+      <h3>Effect of Termination</h3>
+      <p>Upon expiration or termination of this agreement, Customer's right to access the Service ceases immediately. Within 30 business days following a formal written request submitted by Customer within the termination window, QuarkMemory shall permanently purge or erase Customer Data from its live operational servers, except where minimal data retention is legally required by federal archiving regulations. Customer may retrieve System Graph Outputs via an export path in a usable format 30 days before purge.</p>
+    </section>
+
+    <section class="terms-section">
+      <h2>12. Governing Law and Enterprise Dispute Resolution</h2>
+      <h3>Choice of Law</h3>
+      <p>These Terms, along with any transactional disputes arising directly out of their enforcement, shall be governed, interpreted, and construed exclusively under the internal substantive laws of the State of Delaware, without giving effect to any choice of law or conflict of law principles.</p>
+      <h3>Arbitration Protocol</h3>
+      <p>Any unresolved dispute, controversy, or claim arising under or relating to this agreement shall be submitted to confidential, binding commercial arbitration administered by the American Arbitration Association (“AAA”) in accordance with its Commercial Arbitration Rules. The place of arbitration shall be Wilmington, Delaware. The dispute shall be resolved by a single, neutral arbitrator possessing specific expertise in enterprise B2B software architectures.</p>
+      <h3>Waiver of Jury Trial and Class Actions</h3>
+      <p>BOTH PARTIES EXPLICITLY AGREE TO WAIVE THEIR RIGHT TO A JURY TRIAL AND THE RIGHT TO PARTICIPATE AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS ACTION OR REPRESENTATIVE ACTION FILED AGAINST THE OTHER.</p>
+    </section>
+
+    <section class="terms-section">
+      <h2>13. General Enterprise Provisions</h2>
+      <h3>Severability</h3>
+      <p>If any provision of these Terms is deemed invalid or unenforceable by an arbitrator or court of competent jurisdiction, the remaining terms shall continue in full force and effect.</p>
+      <h3>Assignment</h3>
+      <p>Customer may not assign, delegate, or transfer its rights or obligations under these Terms without the prior, express written consent of QuarkMemory. QuarkMemory may freely assign these Terms in connection with a corporate merger, acquisition, or sale of substantially all platform assets.</p>
+      <h3>Entire Agreement</h3>
+      <p>These Terms, in tandem with any fully executed corporate Order Forms, constitute the entire legal agreement between QuarkMemory and Customer regarding the Service, superseding all prior or contemporaneous written, oral, or electronic proposals or communication protocols.</p>
+    </section>
+
+    <section class="terms-section terms-contact">
+      <h2>14. Enterprise Contact Channel</h2>
+      <p>For any formal legal notifications, pricing tier queries, or compliance matters, please direct all official communications to: <a href="mailto:admin@quarkmemory.com">admin@quarkmemory.com</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p class="mono">© 2026 QuarkMemory LLC — All rights reserved. · <a href="terms.html">Terms of Service</a></p>
+  </footer>
+
+</body>
+
+</html>

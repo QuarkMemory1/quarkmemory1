@@ -488,6 +488,17 @@
       color: var(--muted-fg);
     }
 
+    footer a {
+      color: var(--muted-fg);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.15s;
+    }
+
+    footer a:hover {
+      color: var(--foreground);
+    }
+
     @media (max-width: 1024px) {
       .cap-3cols {
         grid-template-columns: 1fr;
@@ -737,7 +748,7 @@
   </main>
 
   <footer>
-    <p class="mono">© 2026 QuarkMemory — All rights reserved.</p>
+    <p class="mono">© 2026 QuarkMemory LLC — All rights reserved. · <a href="terms.html">Terms of Service</a></p>
   </footer>
 
   <script>
