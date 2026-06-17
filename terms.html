@@ -33,6 +33,7 @@
     html {
       font-size: 16px;
       scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
     body {
@@ -42,6 +43,24 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       line-height: 1.6;
+      overflow-x: hidden;
+      max-width: 100%;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    img,
+    iframe,
+    video {
+      max-width: 100%;
+    }
+
+    h1, h2, h3, h4, h5, h6, p, li, dd, dt, a, span {
+      overflow-wrap: break-word;
+    }
+
+    .mono,
+    footer p {
+      overflow-wrap: anywhere;
     }
 
     .mono {
@@ -113,6 +132,7 @@
 
     main {
       max-width: 800px;
+      width: 100%;
       margin: 0 auto;
       padding: 7rem 2rem 4rem;
     }
@@ -243,13 +263,51 @@
       color: var(--foreground);
     }
 
-    @media (max-width: 640px) {
-      main {
-        padding: 6rem 1.25rem 3rem;
+    @media (max-width: 768px) {
+      .nav-inner {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
       }
 
       .nav-links {
-        gap: 1rem;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+      }
+
+      .nav-links a {
+        font-size: 0.7rem;
+      }
+
+      .btn-primary {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.7rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding: 6rem 1rem 3rem;
+      }
+
+      h1 {
+        font-size: clamp(1.75rem, 8vw, 2.75rem);
+      }
+
+      .terms-intro {
+        font-size: 0.95rem;
+      }
+
+      footer {
+        padding: 2rem 1rem;
+      }
+
+      footer p {
+        line-height: 1.6;
+        max-width: 20rem;
+        margin: 0 auto;
       }
     }
   </style>

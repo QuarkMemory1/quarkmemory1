@@ -37,6 +37,7 @@
     html {
       font-size: 16px;
       scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
     body {
@@ -46,6 +47,25 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       line-height: 1.5;
+      overflow-x: hidden;
+      max-width: 100%;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    img,
+    iframe,
+    video,
+    svg {
+      max-width: 100%;
+    }
+
+    h1, h2, h3, h4, h5, h6, p, li, dd, dt, a, span {
+      overflow-wrap: break-word;
+    }
+
+    .mono,
+    footer p {
+      overflow-wrap: anywhere;
     }
 
     .mono {
@@ -150,6 +170,8 @@
     .section-inner {
       max-width: 1280px;
       margin: 0 auto;
+      width: 100%;
+      min-width: 0;
     }
 
     .section-tag {
@@ -515,6 +537,30 @@
       }
     }
 
+    @media (max-width: 768px) {
+      .nav-inner {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+      }
+
+      .nav-links a {
+        font-size: 0.7rem;
+      }
+
+      .btn-primary {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.7rem;
+      }
+    }
+
     @media (max-width: 640px) {
       .q-card {
         grid-template-columns: 1fr;
@@ -525,8 +571,51 @@
         border-top: 1px solid var(--card-border);
       }
 
+      .q-card-left,
+      .q-card-right {
+        padding: 1.25rem 1rem;
+      }
+
       main {
         padding: 6rem 1rem 4rem;
+      }
+
+      .page-heading {
+        font-size: clamp(1.75rem, 8vw, 2.5rem);
+      }
+
+      .cap-num-row {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .cap-section-title {
+        font-size: 1.25rem;
+      }
+
+      .cap-section {
+        margin-top: 3rem;
+        margin-bottom: 4rem;
+      }
+
+      .highlight-box,
+      .cap-integrity-box,
+      .ev-cell {
+        padding: 1.5rem 1rem;
+      }
+
+      .cap-card {
+        padding: 1.75rem 1.25rem;
+      }
+
+      footer {
+        padding: 2rem 1rem;
+      }
+
+      footer p {
+        line-height: 1.6;
+        max-width: 20rem;
+        margin: 0 auto;
       }
     }
   </style>
