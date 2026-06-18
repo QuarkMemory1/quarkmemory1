@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuarkMemory — Solutions &amp; Live Demos</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,300;1,9..40,400&display=swap"
+    rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --background: #0d0c0b;
+      --background-raised: rgba(19, 18, 16, 0.5);
+      --foreground: #f5f3f0;
+      --card: rgba(30, 28, 26, 0.5);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --primary: #b67be6;
+      --secondary: #ffad03;
+      --muted-fg: #8a8480;
+      --body-fg: #c8c4be;
+      --border: #242220;
+      --destructive: #e84040;
+      --success: #40c057;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      background: var(--background);
+      color: var(--foreground);
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+      max-width: 100%;
+      -webkit-text-size-adjust: 100%;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3, h4, p, li, span { overflow-wrap: break-word; }
+    .mono, pre, code { overflow-wrap: anywhere; }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--background) !important;
+      font-weight: 600;
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--foreground); transform: translateY(-1px); }
+    .btn-ghost {
+      border: 1px solid var(--border);
+      color: var(--foreground);
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+
+    .glass-anim {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .glass-anim.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .demo-panel,
+    .metrics-row,
+    .launch-card,
+    .prd-doc,
+    .story-connector,
+    .sol-section h2,
+    .sol-section .lead {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      background: rgba(13, 12, 11, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1280px; margin: 0 auto; padding: 1rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { width: 40px; height: 40px; background: url('logo.png') center/cover no-repeat; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8125rem; color: var(--muted-fg); transition: color 0.15s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--foreground); }
+
+    main { padding-top: 5rem; }
+
+    /* HERO */
+    .sol-hero {
+      padding: 4rem 2rem 3rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .sol-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      opacity: 0.03;
+      background-image:
+        linear-gradient(rgba(182, 123, 230, 0.8) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(182, 123, 230, 0.8) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .sol-hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; text-align: center; }
+    .sol-tag { font-size: 0.7rem; color: var(--secondary); margin-bottom: 1.5rem; letter-spacing: 0.08em; }
+    .sol-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1.25rem;
+    }
+    .sol-hero h1 span { color: var(--primary); }
+    .sol-hero p { color: var(--body-fg); font-size: 1.1rem; max-width: 640px; margin: 0 auto 2rem; }
+
+    .persona-pills {
+      display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-bottom: 2.5rem;
+    }
+    .persona-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.6rem 1.25rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--muted-fg);
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .persona-pill:hover { border-color: var(--primary); color: var(--foreground); }
+    .persona-pill.active {
+      border-color: var(--primary);
+      background: rgba(182, 123, 230, 0.12);
+      color: var(--foreground);
+      box-shadow: 0 0 24px rgba(182, 123, 230, 0.15);
+    }
+
+    /* LAUNCH REEL */
+    .launch-reel {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+    .launch-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: left;
+    }
+    .launch-card:hover { border-color: rgba(182, 123, 230, 0.35); transform: translateY(-2px); }
+    .launch-card.active { border-color: var(--primary); box-shadow: 0 0 32px rgba(182, 123, 230, 0.12); }
+    .launch-card-header {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--muted-fg);
+    }
+    .launch-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); animation: pulse-dot 2s infinite; }
+    @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .launch-screen {
+      padding: 1.25rem;
+      min-height: 200px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      line-height: 1.65;
+      color: var(--body-fg);
+      position: relative;
+    }
+    .launch-label {
+      padding: 1rem 1.25rem;
+      font-size: 0.85rem; font-weight: 600; color: var(--foreground);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .launch-label svg { flex-shrink: 0; }
+
+    /* SECTIONS */
+    .sol-section {
+      padding: 5rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .sol-section-inner { max-width: 1100px; margin: 0 auto; min-width: 0; }
+    .sol-section-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; color: var(--muted-fg); margin-bottom: 1rem;
+    }
+    .sol-section h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.75rem;
+    }
+    .sol-section .lead {
+      color: var(--body-fg); font-size: 1.05rem; max-width: 720px; margin-bottom: 2.5rem; line-height: 1.7;
+    }
+
+    /* DEMO TOGGLE */
+    .demo-toggle {
+      display: inline-flex;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .demo-toggle button {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      padding: 0.6rem 1.25rem;
+      border: none;
+      background: transparent;
+      color: var(--muted-fg);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .demo-toggle button.active {
+      background: rgba(232, 64, 64, 0.12);
+      color: var(--destructive);
+    }
+    .demo-toggle button.active.good {
+      background: rgba(64, 192, 87, 0.12);
+      color: var(--success);
+    }
+
+    /* CLAUDE-STYLE AGENT PANEL */
+    .demo-panel {
+      background: #1a1918;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+    }
+    .claude-window-top {
+      display: flex;
+      align-items: stretch;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+    }
+    .claude-traffic {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 0.875rem;
+      flex-shrink: 0;
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .claude-traffic span { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .claude-tabs {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      flex: 1;
+      min-width: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .claude-tabs::-webkit-scrollbar { display: none; }
+    .claude-tab {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      padding: 0.65rem 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted-fg);
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      text-transform: lowercase;
+      line-height: 1;
+    }
+    .claude-tab.active {
+      color: var(--foreground);
+      background: rgba(255, 255, 255, 0.04);
+      border-bottom: 2px solid #d97757;
+      margin-bottom: -1px;
+    }
+    .claude-session-bar {
+      padding: 0.5rem 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted-fg);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.15);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .demo-panel-body {
+      padding: 1.25rem 1rem 1.5rem;
+      min-height: 360px;
+      background: linear-gradient(180deg, #1a1918 0%, #141312 100%);
+    }
+    .agent-msg {
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .agent-msg.visible { opacity: 1; transform: translateY(0); }
+    .agent-msg-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+    .agent-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      font-weight: 700;
+    }
+    .agent-avatar.user {
+      background: rgba(255, 173, 3, 0.15);
+      color: var(--secondary);
+      border: 1px solid rgba(255, 173, 3, 0.25);
+    }
+    .agent-avatar.assistant {
+      background: rgba(217, 119, 87, 0.2);
+      color: #e8a088;
+      border: 1px solid rgba(217, 119, 87, 0.35);
+    }
+    .agent-avatar.system {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--muted-fg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .agent-content { flex: 1; min-width: 0; }
+    .agent-role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.4rem;
+      color: var(--muted-fg);
+    }
+    .agent-bubble {
+      font-size: 0.875rem;
+      color: var(--body-fg);
+      line-height: 1.65;
+      padding: 0;
+    }
+    .agent-bubble.typed::after {
+      content: '';
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--primary);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink-cursor 0.9s step-end infinite;
+    }
+    @keyframes blink-cursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .agent-bubble.error { color: #ff8787; }
+    .agent-bubble.success { color: #c8f0d0; }
+    .agent-bubble .hl-bad { color: #ff8787; font-weight: 500; }
+    .agent-bubble .hl-good { color: #69db7c; font-weight: 500; }
+    .memory-inject {
+      margin: 0 0 1.5rem;
+      padding: 1rem 1.125rem;
+      border-radius: 10px;
+      background: rgba(182, 123, 230, 0.1);
+      border: 1px solid rgba(182, 123, 230, 0.28);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      line-height: 1.7;
+      color: var(--body-fg);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .memory-inject.visible { opacity: 1; transform: translateY(0); }
+    .memory-inject .mem-label { color: var(--primary); font-size: 0.65rem; margin-bottom: 0.5rem; letter-spacing: 0.04em; }
+
+    /* METRICS ROW */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      margin-top: 2rem;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .metric-cell {
+      background: var(--background-raised);
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+    }
+    .metric-num {
+      font-size: 1.75rem; font-weight: 900; margin-bottom: 0.35rem;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .metric-num.bad { color: var(--destructive); }
+    .metric-num.good { color: var(--success); }
+    .metric-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; color: var(--muted-fg); line-height: 1.4;
+    }
+
+    /* PRD COMPARE */
+    .prd-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      align-items: stretch;
+    }
+    .prd-col-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.65rem;
+      padding-left: 0.15rem;
+    }
+    .prd-col-label.bad { color: var(--destructive); }
+    .prd-col-label.good { color: var(--success); }
+    .prd-doc {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .prd-doc-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .prd-doc-title { font-weight: 700; font-size: 0.95rem; }
+    .prd-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+    }
+    .prd-badge.grounded { background: rgba(64,192,87,0.15); color: var(--success); }
+    .prd-badge.invented { background: rgba(232,64,64,0.15); color: var(--destructive); }
+    .prd-body { padding: 1.25rem; max-height: 420px; overflow-y: auto; flex: 1; }
+    .prd-fr {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.85rem;
+      line-height: 1.55;
+    }
+    .prd-fr:last-child { border-bottom: none; }
+    .prd-fr-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      margin-bottom: 0.25rem;
+    }
+    .prd-fr-id.truth { color: var(--success); }
+    .prd-fr-id.new { color: var(--secondary); }
+    .prd-fr-id.false { color: var(--destructive); }
+    .prd-fr p { color: var(--body-fg); font-size: 0.82rem; }
+
+    /* STORY CONNECTOR */
+    .story-connector {
+      background: linear-gradient(135deg, rgba(255,173,3,0.06) 0%, rgba(13,12,11,0.9) 50%, rgba(182,123,230,0.06) 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .story-connector h3 { font-size: 1.25rem; margin-bottom: 1.25rem; }
+
+    /* DOWNLOADS */
+    .doc-links {
+      display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem;
+    }
+    .doc-link {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card);
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .doc-link:hover { border-color: var(--primary); }
+    .doc-link span { color: var(--muted-fg); font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; }
+
+    /* CTA */
+    .sol-cta {
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .sol-cta h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); margin-bottom: 1rem; }
+    .sol-cta p { color: var(--body-fg); margin-bottom: 2rem; }
+    .sol-cta-btns { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+
+    footer {
+      background: var(--background);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem; text-align: center;
+    }
+    footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted-fg); }
+    footer a { color: var(--muted-fg); text-decoration: underline; text-underline-offset: 3px; }
+    footer a:hover { color: var(--foreground); }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 900px) {
+      .launch-reel, .prd-grid { grid-template-columns: 1fr; }
+      .metrics-row { grid-template-columns: 1fr 1fr; }
+      .prd-body { max-height: 320px; }
+    }
+    @media (max-width: 768px) {
+      .nav-inner { flex-wrap: wrap; gap: 0.75rem; padding: 0.75rem 1rem; }
+      .nav-links { width: 100%; justify-content: center; flex-wrap: wrap; gap: 0.5rem 1rem; }
+      .nav-links a { font-size: 0.7rem; }
+      .btn-primary { padding: 0.4rem 0.75rem; font-size: 0.7rem; }
+    }
+    @media (max-width: 640px) {
+      .sol-hero, .sol-section { padding: 3rem 1rem; }
+      .metrics-row { grid-template-columns: 1fr; }
+      footer p { line-height: 1.6; max-width: 20rem; margin: 0 auto; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="QuarkMemory home"></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="solutions.html" class="active">Solutions</a>
+        <a href="capabilities.html">Capabilities</a>
+        <a href="about.html">About</a>
+        <a href="index.html#demo" class="btn-primary">Book a Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="sol-hero">
+      <div class="sol-hero-inner glass-anim">
+        <div class="sol-tag mono">└── live-demos</div>
+        <h1>Same product. <span>Two critical wounds.</span><br>Neutral, interoperable memory mends both.</h1>
+
+        <div class="persona-pills">
+          <button type="button" class="persona-pill active" data-target="engineering">// engineering &amp; architecture</button>
+          <button type="button" class="persona-pill" data-target="product">// product &amp; requirements</button>
+        </div>
+
+        <div class="launch-reel">
+          <a href="#engineering" class="launch-card active" id="launch-eng">
+            <div class="launch-card-header">
+              <span>agent.session — citation-gating refactor</span>
+              <span class="launch-dot"></span>
+            </div>
+            <div class="launch-screen" id="launch-eng-screen">
+              <div style="color: var(--destructive);">✗ Proposes new entitlements microservice</div>
+              <div style="margin-top: 0.5rem;">✗ Ignores existing Broker Research Entitlement Guard</div>
+              <div style="margin-top: 0.5rem; color: var(--muted-fg);">$ claude — implement citation checks...</div>
+            </div>
+            <div class="launch-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              For developers &amp; AI/tech leads
+            </div>
+          </a>
+          <a href="#product" class="launch-card" id="launch-pm">
+            <div class="launch-card-header">
+              <span>requirement.draft — broker entitlements PRD</span>
+              <span class="launch-dot"></span>
+            </div>
+            <div class="launch-screen" id="launch-pm-screen">
+              <div style="color: var(--destructive);">✗ 15 sections · greenfield microservice</div>
+              <div style="margin-top: 0.5rem;">✗ Invented 50ms p95 · admin UI · PostgreSQL stack</div>
+              <div style="margin-top: 0.5rem; color: var(--muted-fg);">Same prompt. Generic LLM draft.</div>
+            </div>
+            <div class="launch-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              For PMs &amp; product owners
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENGINEERING DEMO -->
+    <section class="sol-section glass-anim" id="engineering">
+      <div class="sol-section-inner">
+        <div class="sol-section-tag mono">└── demo.01 — engineering</div>
+        <h2>Your agent can't fix what it never learned.</h2>
+        <p class="lead">You're a senior engineer. You ask Claude to wire entitlement checks into generative search citations. Without us, the agent confidently clones infrastructure your org already has. With QuarkMemory MCP, it builds upon systems you actually run.</p>
+
+        <div class="demo-toggle" role="tablist">
+          <button type="button" class="active" data-demo="eng-bad" role="tab">Without QuarkMemory</button>
+          <button type="button" class="good" data-demo="eng-good" role="tab">With QuarkMemory MCP</button>
+        </div>
+
+        <div class="demo-panel glass-anim">
+          <div class="claude-window-top">
+            <div class="claude-traffic">
+              <span style="background:#ff5f57;"></span>
+              <span style="background:#febc2e;"></span>
+              <span style="background:#28c840;"></span>
+            </div>
+            <div class="claude-tabs">
+              <span class="claude-tab active">claude</span>
+              <span class="claude-tab">code</span>
+              <span class="claude-tab">broker</span>
+              <span class="claude-tab">citation</span>
+              <span class="claude-tab">gating</span>
+            </div>
+          </div>
+          <div class="claude-session-bar">broker-citation-gating · generative search entitlements</div>
+          <div class="demo-panel-body">
+            <div id="eng-bad" class="demo-view">
+              <div class="agent-msg" data-delay="0">
+                <div class="agent-msg-row">
+                  <div class="agent-avatar user">You</div>
+                  <div class="agent-content">
+                    <div class="agent-role">User</div>
+                    <div class="agent-bubble type-target" data-html="Add entitlement checks to generative search citations. Gate broker research before render. Match our compliance posture."></div>
+                  </div>
+                </div>
+              </div>
+              <div class="agent-msg" data-delay="800">
+                <div class="agent-msg-row">
+                  <div class="agent-avatar assistant">C</div>
+                  <div class="agent-content">
+                    <div class="agent-role">Claude</div>
+                    <div class="agent-bubble type-target" data-html="I'll create a dedicated &lt;span class=&quot;hl-bad&quot;&gt;entitlements microservice&lt;/span&gt; with PostgreSQL + Redis, sitting between search and the citation DB.&lt;br&gt;&lt;br&gt;• New REST API: &lt;span class=&quot;hl-bad&quot;&gt;POST /api/v1/entitlements/check&lt;/span&gt;&lt;br&gt;• Admin UI for grant/revoke + bulk import&lt;br&gt;• Safe mode: return no citations if service unavailable&lt;br&gt;• Target: &lt;span class=&quot;hl-bad&quot;&gt;&amp;lt;50ms p95&lt;/span&gt;, 99.9% uptime&lt;br&gt;&lt;br&gt;Estimated timeline: &lt;span class=&quot;hl-bad&quot;&gt;~17 weeks&lt;/span&gt; across 5 phases."></div>
+                  </div>
+                </div>
+              </div>
+              <div class="agent-msg" data-delay="2400">
+                <div class="agent-msg-row">
+                  <div class="agent-avatar system">CR</div>
+                  <div class="agent-content">
+                    <div class="agent-role">Code review</div>
+                    <div class="agent-bubble error type-target" data-html="&lt;span class=&quot;hl-bad&quot;&gt;BLOCKED&lt;/span&gt; — We already have Broker Research Entitlement Guard. Why are we rebuilding entitlements?&lt;br&gt;Admin UI is a different team's roadmap. Where did 50ms and 99.9% come from?&lt;br&gt;Citation gating belongs in the composer/guard, not a new microservice."></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="eng-good" class="demo-view hidden">
+              <div class="agent-msg" data-delay="0">
+                <div class="agent-msg-row">
+                  <div class="agent-avatar user">You</div>
+                  <div class="agent-content">
+                    <div class="agent-role">User</div>
+                    <div class="agent-bubble type-target" data-html="Add entitlement checks to generative search citations. Gate broker research before render. Match our compliance posture."></div>
+                  </div>
+                </div>
+              </div>
+              <div class="memory-inject" data-delay="600">
+                <div class="mem-label">QUARKMEMORY MCP — injected context</div>
+                Matched capability: <span style="color:var(--foreground);">Broker Research Entitlements</span><br>
+                • Org-wide rules enforced via <span style="color:var(--secondary);">Broker Research Entitlement Guard</span><br>
+                • Seat checks before summarization — <span style="color:var(--secondary);">Generative Answer Composer</span> integration point<br>
+                • Admin/config workflows are <span style="color:var(--destructive);">explicit non-goals</span> [ADR-014, commit #8842]<br>
+                • Latency: inherit existing feature-area SLOs — do not invent p95 targets<br>
+                • Audit: allow/deny per citation — compliance review without content access [PR #2291 thread]
+              </div>
+              <div class="agent-msg" data-delay="1400">
+                <div class="agent-msg-row">
+                  <div class="agent-avatar assistant">C</div>
+                  <div class="agent-content">
+                    <div class="agent-role">Claude + MCP</div>
+                    <div class="agent-bubble success type-target" data-html="Extend existing &lt;span class=&quot;hl-good&quot;&gt;Entitlement Guard + Answer Composer&lt;/span&gt; — no new policy surface.&lt;br&gt;&lt;br&gt;Phase 1: citation-render gating + audit logging&lt;br&gt;Phase 2: pre-summarization seat checks + mixed-source masking&lt;br&gt;Phase 3: compliance-admin review tooling&lt;br&gt;&lt;br&gt;&lt;span class=&quot;hl-good&quot;&gt;Defers&lt;/span&gt; API schema, caching strategy, and denied-state UI to eng design — flagged as &quot;needs input,&quot; not invented."></div>
+                  </div>
+                </div>
+              </div>
+              <div class="agent-msg" data-delay="2800">
+                <div class="agent-msg-row">
+                  <div class="agent-avatar system">CR</div>
+                  <div class="agent-content">
+                    <div class="agent-role">Code review</div>
+                    <div class="agent-bubble success type-target" data-html="&lt;span class=&quot;hl-good&quot;&gt;APPROVED FOR PHASING&lt;/span&gt; — Extends the guard and composer. FR-4/FR-10 are net-new and scoped. Latency tied to existing SLOs. ~80% product debate, not factual correction."></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="metrics-row glass-anim">
+          <div class="metric-cell">
+            <div class="metric-num bad">17 wk</div>
+            <div class="metric-label">Without — greenfield rebuild estimate</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-num good">3 ph</div>
+            <div class="metric-label">With — phased extension of existing guard</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-num bad">60%+</div>
+            <div class="metric-label">Without — eng comments on factual errors first</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-num good">~80%</div>
+            <div class="metric-label">With — product phasing debate, not scope fights</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT DEMO -->
+    <section class="sol-section glass-anim" id="product" style="background: var(--background-raised);">
+      <div class="sol-section-inner">
+        <div class="sol-section-tag mono">└── demo.02 — product</div>
+        <h2>Shipping requirements just got a whole lot faster.</h2>
+        <p class="lead">You're a product manager. You ask for a broker research entitlements PRD. QuarkMemory frames the draft within the context of what your org has already discussed, decided, sprinted and implemented. No PM is going to manually reconcile Slack, old PRDs, or eng threads before v1 leaves your desk. We will.</p>
+
+        <div class="prd-grid glass-anim">
+          <div>
+            <div class="prd-col-label bad">// Generic LLM draft</div>
+            <div class="prd-doc" id="prd-bad">
+              <div class="prd-doc-header">
+                <span class="prd-doc-title">Broker Research Entitlements PRD</span>
+                <span class="prd-badge invented">UNGROUNDED · ~15 sections</span>
+              </div>
+              <div class="prd-body">
+                <div class="prd-fr">
+                  <div class="prd-fr-id false">FR-1 · INVENTED</div>
+                  <p>New entitlement data model with license expiration tracking — org already has entitlements.</p>
+                </div>
+                <div class="prd-fr">
+                  <div class="prd-fr-id false">FR-4 · CONTRADICTS SCOPE</div>
+                  <p>Admin interface to grant/revoke broker access, bulk import, self-service view — config is out of band.</p>
+                </div>
+                <div class="prd-fr">
+                  <div class="prd-fr-id false">ARCHITECTURE · GREENFIELD</div>
+                  <p>Dedicated entitlements microservice between search engine and citation DB. PostgreSQL + Redis + 7-year audit store.</p>
+                </div>
+                <div class="prd-fr">
+                  <div class="prd-fr-id false">NFR · INVENTED METRICS</div>
+                  <p>Entitlement check &lt;50ms p95. 99.9% uptime SLA. 10,000 checks/sec. Zero licensing violations.</p>
+                </div>
+                <div class="prd-fr">
+                  <div class="prd-fr-id false">TIMELINE</div>
+                  <p>17-week greenfield build across 5 phases — eng reaction: "We already have this. Why rebuild?"</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="prd-col-label good">// QuarkMemory-grounded draft</div>
+            <div class="prd-doc" id="prd-good">
+              <div class="prd-doc-header">
+                <span class="prd-doc-title">Broker Research Entitlements PRD</span>
+                <span class="prd-badge grounded">GROUNDED · 12 focused FRs</span>
+              </div>
+              <div class="prd-body">
+                <div class="prd-fr">
+                  <div class="prd-fr-id truth">FR-1 · ORG TRUTH</div>
+                  <p>Evaluate org-wide broker entitlements before broker content in generative results/citations.</p>
+                </div>
+                <div class="prd-fr">
+                  <div class="prd-fr-id truth">FR-2 · ORG TRUTH</div>
+                  <p>Resolve seat-level entitlements before generative summarization begins.</p>
+                </div>
+                <div class="prd-fr">
+                  <div class="prd-fr-id truth">FR-3 · ORG TRUTH</div>
+                  <p>Block/mask broker material when seat lacks entitlement — not after answer is composed.</p>
+                </div>
+                <div class="prd-fr">
+                  <div class="prd-fr-id new">FR-4 · NEW (explicit)</div>
+                  <p>Sentence-level citation gating at render time — flagged in trust summary, not presented as settled fact.</p>
+                </div>
+                <div class="prd-fr">
+                  <div class="prd-fr-id truth">NON-GOAL · ORG TRUTH</div>
+                  <p>Do not replace subscription ingestion or admin entitlement configuration workflows.</p>
+                </div>
+                <div class="prd-fr">
+                  <div class="prd-fr-id new">TRUST SUMMARY</div>
+                  <p>Grounded vs new vs needs-eng-input separated. Validation gate blocks ungrounded precise metrics before "ready to share."</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="metrics-row glass-anim">
+          <div class="metric-cell">
+            <div class="metric-num bad">~15</div>
+            <div class="metric-label">Sections in generic draft incl. API appendix</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-num good">12</div>
+            <div class="metric-label">Focused FRs in grounded draft (~2 pages)</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-num bad">High</div>
+            <div class="metric-label">Eng back-and-forth on facts vs product choices</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-num good">Low</div>
+            <div class="metric-label">Facts aligned on first review — phasing debate only</div>
+          </div>
+        </div>
+
+        <div class="story-connector glass-anim">
+          <h3>It doesn't matter what your role or task is in your enterprise. We're here to make it better.</h3>
+          <a href="index.html#demo" class="btn-primary">See us on your stack</a>
+        </div>
+
+        <div class="doc-links">
+          <a href="quarkmemor-rqm-qm-june11-110626-164111.pdf" class="doc-link glass-anim" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+            <div>Grounded PRD sample <span>PDF</span></div>
+          </a>
+          <a href="quarkmemor-rqm-noqm-june11-110626-164116.pdf" class="doc-link glass-anim" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--destructive)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+            <div>Generic LLM PRD sample <span>PDF</span></div>
+          </a>
+          <a href="quarkmemor-rqm-june11-comparison-110626-164112.pdf" class="doc-link glass-anim" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M16 3h5v5M8 3H3v5M3 16v5h5M21 16v5h-5"></path></svg>
+            <div>Full side-by-side comparison <span>PDF</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="sol-cta">
+      <h2>Memory that ships with your agents.</h2>
+      <p>Decision lineage for code. Org truth for requirements. One graph, every persona.</p>
+      <div class="sol-cta-btns">
+        <a href="index.html#demo" class="btn-primary">Book a live walkthrough</a>
+        <a href="capabilities.html" class="btn-ghost">Explore capabilities</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="mono">© 2026 QuarkMemory LLC — All rights reserved. · <a href="terms.html">Terms of Service</a></p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Persona pills scroll
+      document.querySelectorAll('.persona-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          document.querySelectorAll('.persona-pill').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          const target = pill.dataset.target;
+          document.getElementById(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.getElementById('launch-' + (target === 'engineering' ? 'eng' : 'pm'))?.classList.add('active');
+          document.getElementById('launch-' + (target === 'engineering' ? 'pm' : 'eng'))?.classList.remove('active');
+        });
+      });
+
+      // Engineering demo toggle
+      document.querySelectorAll('[data-demo]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('[data-demo]').forEach(b => { b.classList.remove('active', 'good'); });
+          btn.classList.add('active');
+          if (btn.dataset.demo === 'eng-good') btn.classList.add('good');
+          document.getElementById('eng-bad').classList.toggle('hidden', btn.dataset.demo !== 'eng-bad');
+          document.getElementById('eng-good').classList.toggle('hidden', btn.dataset.demo !== 'eng-good');
+          playDemoAnimation(btn.dataset.demo === 'eng-good' ? 'eng-good' : 'eng-bad');
+        });
+      });
+
+      function playDemoAnimation(viewId) {
+        const view = document.getElementById(viewId);
+        if (!view) return;
+        view.querySelectorAll('.agent-msg, .memory-inject').forEach(el => {
+          el.classList.remove('visible');
+          const bubble = el.querySelector('.type-target');
+          if (bubble) {
+            bubble.innerHTML = '';
+            bubble.classList.remove('typed');
+          }
+        });
+
+        const steps = [...view.querySelectorAll('.agent-msg, .memory-inject')].sort(
+          (a, b) => Number(a.dataset.delay || 0) - Number(b.dataset.delay || 0)
+        );
+
+        steps.forEach(step => {
+          const delay = Number(step.dataset.delay || 0);
+          setTimeout(() => {
+            step.classList.add('visible');
+            const bubble = step.querySelector('.type-target');
+            if (bubble && bubble.dataset.html) {
+              typeHtmlInto(bubble, bubble.dataset.html);
+            }
+          }, delay);
+        });
+      }
+
+      function typeHtmlInto(el, html) {
+        el.classList.add('typed');
+        el.innerHTML = '';
+        const plain = document.createElement('div');
+        plain.innerHTML = html;
+        const fullText = plain.textContent;
+        let i = 0;
+        function step() {
+          if (i >= fullText.length) {
+            el.innerHTML = html;
+            el.classList.remove('typed');
+            return;
+          }
+          i += 2;
+          el.textContent = fullText.slice(0, i);
+          requestAnimationFrame(step);
+        }
+        step();
+      }
+
+      playDemoAnimation('eng-bad');
+
+      // Launch reel autoplay
+      const engLines = [
+        '<div style="color: var(--destructive);">✗ Proposes new entitlements microservice</div><div style="margin-top:0.5rem;">✗ Ignores existing Broker Research Entitlement Guard</div><div style="margin-top:0.5rem;color:var(--muted-fg);">$ claude — implement citation checks...</div>',
+        '<div style="color:var(--destructive);">✗ POST /api/v1/entitlements/check — not in our stack</div><div style="margin-top:0.5rem;">✗ Admin UI + bulk import — wrong team\'s roadmap</div><div style="margin-top:0.5rem;color:var(--muted-fg);">Review: "Why rebuild what we have?"</div>',
+        '<div style="color:var(--destructive);">✗ Safe mode: no citations — unstated policy call</div><div style="margin-top:0.5rem;">✗ 17-week estimate for duplicate system</div><div style="margin-top:0.5rem;color:var(--muted-fg);">~60% of review = factual correction</div>'
+      ];
+      const pmLines = [
+        '<div style="color:var(--destructive);">✗ 15 sections · greenfield microservice</div><div style="margin-top:0.5rem;">✗ Invented 50ms p95 · admin UI · PostgreSQL stack</div><div style="margin-top:0.5rem;color:var(--muted-fg);">Same prompt. Generic LLM draft.</div>',
+        '<div style="color:var(--destructive);">✗ FR-4: full admin UI — contradicts org scope</div><div style="margin-top:0.5rem;">✗ "Zero violations" · "99.9% uptime" — invented</div><div style="margin-top:0.5rem;color:var(--muted-fg);">Eng: "Where did these numbers come from?"</div>',
+        '<div style="color:var(--success);">✓ 12 FRs · extends Entitlement Guard</div><div style="margin-top:0.5rem;">✓ Trust summary: grounded vs new vs needs input</div><div style="margin-top:0.5rem;color:var(--muted-fg);">Validation gate before "ready to share"</div>'
+      ];
+      let ei = 0, pi = 0;
+      setInterval(() => {
+        ei = (ei + 1) % engLines.length;
+        pi = (pi + 1) % pmLines.length;
+        const es = document.getElementById('launch-eng-screen');
+        const ps = document.getElementById('launch-pm-screen');
+        if (es) { es.style.opacity = '0'; setTimeout(() => { es.innerHTML = engLines[ei]; es.style.opacity = '1'; }, 200); }
+        if (ps) { ps.style.opacity = '0'; setTimeout(() => { ps.innerHTML = pmLines[pi]; ps.style.opacity = '1'; }, 200); }
+      }, 3500);
+      document.querySelectorAll('.launch-screen').forEach(s => { s.style.transition = 'opacity 0.3s'; });
+
+      // Hash deep link
+      if (location.hash === '#product' || location.hash === '#engineering') {
+        document.querySelector('.persona-pill[data-target="' + location.hash.slice(1) + '"]')?.click();
+      }
+
+      document.querySelectorAll('.glass-anim, .sol-section').forEach(el => {
+        if (!el.classList.contains('glass-anim')) el.classList.add('glass-anim');
+      });
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('active');
+        });
+      }, { threshold: 0.08 });
+      document.querySelectorAll('.glass-anim').forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+
+</html>

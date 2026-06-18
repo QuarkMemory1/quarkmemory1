@@ -895,6 +895,7 @@
       <a href="index.html" class="nav-logo"></a>
       <div class="nav-links">
         <a href="index.html" class="active">Home</a>
+        <a href="solutions.html">Solutions</a>
         <a href="capabilities.html">Capabilities</a>
         <a href="about.html">About</a>
         <a href="index.html#demo" class="btn-primary">Book a Demo</a>
@@ -931,7 +932,7 @@
           <img src="founders.png" alt="Rishikesh and Rahul at the whiteboard" style="width: 100%; border-radius: 8px; box-shadow: 0 16px 40px rgba(0,0,0,0.5);">
         </div>
         
-        <h2 class="rag-heading" style="font-size: clamp(36px, 5vw, 64px); margin-bottom: 3rem;">The Origin Story</h2>
+        <h2 class="rag-heading glass-anim" style="font-size: clamp(36px, 5vw, 64px); margin-bottom: 3rem;">The Origin Story</h2>
         
         <div style="text-align: left; font-size: 1.15rem; color: var(--body-fg); line-height: 1.8; max-width: 800px; margin: 0 auto;">
           <p style="margin-bottom: 1.5rem;">It started with a shared frustration. Late nights tracing a production bug back to a forgotten Slack message or a stale PRD that no one updated. We realized that asking engineers to write more documentation wasn't the cure—it was part of the disease.</p>
@@ -943,7 +944,7 @@
 
   <section id="philosophy" style="padding: 8rem 2rem; background: var(--background-raised); border-top: 1px solid var(--border);">
     <div class="section-inner">
-      <h2 class="rag-heading" style="text-align: center; margin-bottom: 4rem; font-size: clamp(36px, 5vw, 64px);">Our Philosophy</h2>
+      <h2 class="rag-heading glass-anim" style="text-align: center; margin-bottom: 4rem; font-size: clamp(36px, 5vw, 64px);">Our Philosophy</h2>
       
       <div class="sources-grid">
         <div class="source-card gold-tint glass-anim" style="padding: 3rem 2rem;">
@@ -974,7 +975,7 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const cards = document.querySelectorAll('.code-panel, .rag-cta, .rag-stat, .rag-col, .q-card, .highlight-box, .highlight-quote, .cap-card, .cap-integrity-box, .ev-cell, .broken-memory-panel, .beyond-rag-panel, .source-card');
+      const cards = document.querySelectorAll('.code-panel, .rag-cta, .rag-stat, .rag-col, .q-card, .highlight-box, .highlight-quote, .cap-card, .cap-integrity-box, .ev-cell, .broken-memory-panel, .beyond-rag-panel, .source-card, .rag-heading');
       cards.forEach(el => el.classList.add('glass-anim'));
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
