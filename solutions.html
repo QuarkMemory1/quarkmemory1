@@ -395,6 +395,209 @@
     .memory-inject.visible { opacity: 1; transform: translateY(0); }
     .memory-inject .mem-label { color: var(--primary); font-size: 0.65rem; margin-bottom: 0.5rem; letter-spacing: 0.04em; }
 
+    /* DEMO SUBSECTIONS */
+    .demo-subsection {
+      margin-top: 3.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .demo-subsection:first-of-type {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+    .demo-sub-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--secondary);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.04em;
+    }
+    .demo-subsection .lead { margin-bottom: 1.5rem; }
+    .demo-subsection .metrics-row { margin-top: 1.75rem; }
+
+    /* GITHUB PR REVIEW PANEL */
+    .github-panel {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+    }
+    .gh-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0.65rem 1rem;
+      background: rgba(0, 0, 0, 0.35);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted-fg);
+    }
+    .gh-topbar strong { color: var(--foreground); font-weight: 600; }
+    .gh-pr-meta {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .gh-pr-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      line-height: 1.35;
+    }
+    .gh-pr-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+    }
+    .gh-badge {
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--body-fg);
+    }
+    .gh-badge.open { border-color: rgba(64, 192, 87, 0.4); color: var(--success); }
+    .gh-badge.changes { border-color: rgba(255, 173, 3, 0.35); color: var(--secondary); }
+    .gh-tabs {
+      display: flex;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 0 1rem;
+      gap: 0.25rem;
+    }
+    .gh-tab {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      padding: 0.65rem 0.85rem;
+      color: var(--muted-fg);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .gh-tab.active { color: var(--foreground); border-bottom-color: #f78166; }
+    .gh-body { padding: 0; }
+    .gh-file-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--foreground);
+    }
+    .gh-diff {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      line-height: 1.55;
+      overflow-x: auto;
+    }
+    .gh-diff-line {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      padding: 0 0.5rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .gh-diff-line .ln {
+      color: rgba(139, 148, 158, 0.6);
+      text-align: right;
+      padding-right: 0.75rem;
+      user-select: none;
+    }
+    .gh-diff-line.ctx { background: rgba(255, 255, 255, 0.02); color: var(--body-fg); }
+    .gh-diff-line.add { background: rgba(46, 160, 67, 0.12); }
+    .gh-diff-line.add .code { color: #7ee787; }
+    .gh-diff-line.del { background: rgba(248, 81, 73, 0.1); }
+    .gh-diff-line.del .code { color: #ffa198; }
+    .gh-comment-thread {
+      margin: 0;
+      border-left: 4px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .gh-comment-thread.visible { opacity: 1; transform: translateY(0); }
+    .gh-comment-thread.qm { border-left-color: var(--primary); background: rgba(182, 123, 230, 0.06); }
+    .gh-comment-inner { padding: 0.85rem 1rem 1rem; }
+    .gh-comment-head {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.72rem;
+    }
+    .gh-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .gh-avatar.cr { background: rgba(255, 255, 255, 0.08); color: var(--muted-fg); }
+    .gh-avatar.qm { background: rgba(182, 123, 230, 0.25); color: var(--primary); }
+    .gh-avatar.human { background: rgba(255, 173, 3, 0.15); color: var(--secondary); }
+    .gh-comment-author { font-weight: 600; color: var(--foreground); }
+    .gh-comment-time { color: var(--muted-fg); font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; }
+    .gh-comment-body {
+      font-size: 0.78rem;
+      color: var(--body-fg);
+      line-height: 1.65;
+    }
+    .gh-comment-body .hl-bad { color: #ff8787; font-weight: 500; }
+    .gh-comment-body .hl-good { color: #69db7c; font-weight: 500; }
+    .gh-mem-cite {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.35rem 0.55rem;
+      border-radius: 4px;
+      background: rgba(182, 123, 230, 0.12);
+      border: 1px solid rgba(182, 123, 230, 0.25);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--primary);
+      line-height: 1.5;
+    }
+    .gh-review-summary {
+      margin: 1rem 1.25rem 1.25rem;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.78rem;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .gh-review-summary.visible { opacity: 1; transform: translateY(0); }
+    .gh-review-summary.bad { border-color: rgba(232, 64, 64, 0.25); background: rgba(232, 64, 64, 0.06); }
+    .gh-review-summary.good { border-color: rgba(64, 192, 87, 0.25); background: rgba(64, 192, 87, 0.06); }
+    .gh-memory-strip {
+      margin: 0 1.25rem 1rem;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      background: rgba(182, 123, 230, 0.08);
+      border: 1px solid rgba(182, 123, 230, 0.22);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      line-height: 1.65;
+      color: var(--body-fg);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .gh-memory-strip.visible { opacity: 1; transform: translateY(0); }
+    .gh-memory-strip .mem-label { color: var(--primary); font-size: 0.58rem; margin-bottom: 0.4rem; letter-spacing: 0.04em; }
+
     /* METRICS ROW */
     .metrics-row {
       display: grid;
@@ -616,14 +819,19 @@
       <div class="sol-section-inner">
         <div class="sol-section-tag mono">└── demo.01 — engineering</div>
         <h2>Your agent can't fix what it never learned.</h2>
-        <p class="lead">You're a senior engineer. You ask Claude to wire entitlement checks into generative search citations. Without us, the agent confidently clones infrastructure your org already has. With QuarkMemory MCP, it builds upon systems you actually run.</p>
+        <p class="lead">The same institutional memory that grounds your coding agents also powers autonomous PR review. Decisions, constraints, and rationale extracted from tickets, commits, review comments and merged PRs, instead of generic LLM guesses, so implementation and merge stay aligned.</p>
 
-        <div class="demo-toggle" role="tablist">
-          <button type="button" class="active" data-demo="eng-bad" role="tab">Without QuarkMemory</button>
-          <button type="button" class="good" data-demo="eng-good" role="tab">With QuarkMemory MCP</button>
-        </div>
+        <!-- demo.01.a — agent context -->
+        <div class="demo-subsection">
+          <div class="demo-sub-tag mono">└── demo.01.a — agent context</div>
+          <p class="lead">You're a senior engineer. You ask Claude to wire entitlement checks into generative search citations. Without us, the agent confidently clones infrastructure your org already has. With QuarkMemory MCP, it builds upon systems you actually run.</p>
 
-        <div class="demo-panel glass-anim">
+          <div class="demo-toggle" role="tablist">
+            <button type="button" class="active" data-demo="eng-bad" role="tab">Without QuarkMemory</button>
+            <button type="button" class="good" data-demo="eng-good" role="tab">With QuarkMemory MCP</button>
+          </div>
+
+          <div class="demo-panel glass-anim">
           <div class="claude-window-top">
             <div class="claude-traffic">
               <span style="background:#ff5f57;"></span>
@@ -729,6 +937,144 @@
             <div class="metric-label">With — product phasing debate, not scope fights</div>
           </div>
         </div>
+        </div><!-- /.demo-subsection 01.a -->
+
+        <!-- demo.01.b — autonomous PR review -->
+        <div class="demo-subsection">
+          <div class="demo-sub-tag mono">└── demo.01.b — autonomous PR review</div>
+          <p class="lead">You're a technical manager clearing blockers for a team shipping citation gating. Generic review bots miss org constraints buried in merged PR history. QuarkMemory posts line-anchored reviews grounded in decisions, constraints, break-risk, and past human review threads — so merges ship conflict-free instead of looping on facts your org already settled.</p>
+
+          <div class="demo-toggle" role="tablist">
+            <button type="button" class="active" data-pr-review="review-bad" role="tab">Without QuarkMemory</button>
+            <button type="button" class="good" data-pr-review="review-good" role="tab">With QuarkMemory Review</button>
+          </div>
+
+          <div class="github-panel glass-anim">
+            <div class="gh-topbar">
+              <span><strong>acme-search</strong> / platform-api</span>
+              <span>pull_request · synchronize · head <strong>a3f9c2e</strong></span>
+            </div>
+            <div class="gh-pr-meta">
+              <div class="gh-pr-title">feat(composer): gate broker citations at render time</div>
+              <div class="gh-pr-badges">
+                <span class="gh-badge open">Open</span>
+                <span class="gh-badge changes">Request changes</span>
+                <span class="gh-badge">PR #318 · 4 files</span>
+              </div>
+            </div>
+            <div class="gh-tabs">
+              <span class="gh-tab">Conversation</span>
+              <span class="gh-tab active">Files changed</span>
+              <span class="gh-tab">Checks</span>
+            </div>
+            <div class="gh-body">
+              <div class="gh-file-header">
+                <span>src/composer/citation_gate.py</span>
+                <span style="color:var(--muted-fg);">+18 −3</span>
+              </div>
+              <div class="gh-diff">
+                <div class="gh-diff-line ctx"><span class="ln">41</span><span class="code">    def render_citations(self, broker_id: str, chunks: list) -&gt; list:</span></div>
+                <div class="gh-diff-line ctx"><span class="ln">42</span><span class="code">        if not self._guard.has_seat(broker_id):</span></div>
+                <div class="gh-diff-line add"><span class="ln">43</span><span class="code">+       log.debug(f"broker_id={broker_id} denied seat")</span></div>
+                <div class="gh-diff-line add"><span class="ln">44</span><span class="code">+       return []  # safe mode: strip all citations</span></div>
+                <div class="gh-diff-line ctx"><span class="ln">45</span><span class="code">        return self._masking.apply(chunks)</span></div>
+              </div>
+
+              <div id="review-bad" class="pr-review-view">
+                <div class="gh-comment-thread" data-pr-delay="400">
+                  <div class="gh-comment-inner">
+                    <div class="gh-comment-head">
+                      <div class="gh-avatar cr">CR</div>
+                      <span class="gh-comment-author">coderabbit-ai</span>
+                      <span class="gh-comment-time">bot · inline on L43</span>
+                    </div>
+                    <div class="gh-comment-body">Consider extracting the denial branch into a helper for testability. Add unit tests covering the empty-list path.</div>
+                  </div>
+                </div>
+                <div class="gh-comment-thread" data-pr-delay="900">
+                  <div class="gh-comment-inner">
+                    <div class="gh-comment-head">
+                      <div class="gh-avatar cr">CR</div>
+                      <span class="gh-comment-author">coderabbit-ai</span>
+                      <span class="gh-comment-time">bot · inline on L44</span>
+                    </div>
+                    <div class="gh-comment-body">Returning an empty list is a reasonable safe default. You might document this behavior in the module docstring.</div>
+                  </div>
+                </div>
+                <div class="gh-comment-thread" data-pr-delay="1500">
+                  <div class="gh-comment-inner">
+                    <div class="gh-comment-head">
+                      <div class="gh-avatar human">MK</div>
+                      <span class="gh-comment-author">marc.kim</span>
+                      <span class="gh-comment-time">senior eng · 2h later</span>
+                    </div>
+                    <div class="gh-comment-body"><span class="hl-bad">Blocking</span> — We cannot log <code>broker_id</code> in composer paths (PR #2291). Empty citations break compliance dashboards; degraded mode must return masked citations, not []. Bot missed both. Third review round.</div>
+                  </div>
+                </div>
+                <div class="gh-review-summary bad" data-pr-delay="2100">
+                  <strong style="color:var(--destructive);">Merge blocked</strong> — 0/2 bot comments cited org memory · senior eng spent review cycle on constraints already captured in merged PRs · <span style="color:var(--muted-fg);">~3 days to green</span>
+                </div>
+              </div>
+
+              <div id="review-good" class="pr-review-view hidden">
+                <div class="gh-memory-strip" data-pr-delay="300">
+                  <div class="mem-label">QUARKMEMORY — memory bundle for citation_gate.py</div>
+                  Matched: <span style="color:var(--foreground);">CitationGate.render_citations</span> · break-risk <span style="color:var(--destructive);">HIGH</span> (12 callers)<br>
+                  • <span style="color:var(--secondary);">[constraint]</span> Never log broker identifiers in composer paths — audit via Entitlement Guard events [PR #2291]<br>
+                  • <span style="color:var(--secondary);">[behavioral]</span> Degraded mode returns masked citations, not empty lists [PR #184, merged]<br>
+                  • <span style="color:var(--secondary);">[decision]</span> Admin/config workflows are explicit non-goals [ADR-014]<br>
+                  • Past review thread on same file: "empty [] breaks downstream compliance dashboards"
+                </div>
+                <div class="gh-comment-thread qm" data-pr-delay="800">
+                  <div class="gh-comment-inner">
+                    <div class="gh-comment-head">
+                      <div class="gh-avatar qm">QM</div>
+                      <span class="gh-comment-author">quarkmemory-app</span>
+                      <span class="gh-comment-time">bot · inline on L43 · 1m 47s after push</span>
+                    </div>
+                    <div class="gh-comment-body"><span class="hl-bad">Constraint violation</span> — <code>broker_id</code> in debug logs violates org constraint from merged PR #2291: composer paths must not emit broker identifiers; use Entitlement Guard audit events instead.
+                      <div class="gh-mem-cite">memory: [constraint] PR #2291 · fact_entities Tier-1 link · break-risk HIGH</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="gh-comment-thread qm" data-pr-delay="1300">
+                  <div class="gh-comment-inner">
+                    <div class="gh-comment-head">
+                      <div class="gh-avatar qm">QM</div>
+                      <span class="gh-comment-author">quarkmemory-app</span>
+                      <span class="gh-comment-time">bot · inline on L44</span>
+                    </div>
+                    <div class="gh-comment-body"><span class="hl-bad">Behavioral mismatch</span> — Returning <code>[]</code> contradicts <span class="hl-good">[behavioral]</span> fact from PR #184: seat-denied paths must return masked citations so compliance dashboards stay populated. Same concern raised in human review on this file last quarter.
+                      <div class="gh-mem-cite">memory: [behavioral] PR #184 · pr_review_comments L44 history · 12 downstream callers</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="gh-review-summary good" data-pr-delay="1900">
+                  <strong style="color:var(--success);">Request changes posted</strong> — 2/2 comments cite institutional memory · valid line anchors on diff hunks · author fixes before senior eng enters thread · <span style="color:var(--muted-fg);">merge-ready same day</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="metrics-row glass-anim">
+            <div class="metric-cell">
+              <div class="metric-num bad">~3 d</div>
+              <div class="metric-label">Without — merge blocked on rediscovered constraints</div>
+            </div>
+            <div class="metric-cell">
+              <div class="metric-num good">&lt;3 m</div>
+              <div class="metric-label">With — webhook to published review (p50 target)</div>
+            </div>
+            <div class="metric-cell">
+              <div class="metric-num bad">0%</div>
+              <div class="metric-label">Without — generic bot comments citing org memory</div>
+            </div>
+            <div class="metric-cell">
+              <div class="metric-num good">≥80%</div>
+              <div class="metric-label">With — comments grounded in facts &amp; snapshots</div>
+            </div>
+          </div>
+        </div><!-- /.demo-subsection 01.b -->
       </div>
     </section>
 
@@ -949,11 +1295,39 @@
 
       playDemoAnimation('eng-bad');
 
+      // PR review demo toggle
+      document.querySelectorAll('[data-pr-review]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('[data-pr-review]').forEach(b => { b.classList.remove('active', 'good'); });
+          btn.classList.add('active');
+          if (btn.dataset.prReview === 'review-good') btn.classList.add('good');
+          document.getElementById('review-bad').classList.toggle('hidden', btn.dataset.prReview !== 'review-bad');
+          document.getElementById('review-good').classList.toggle('hidden', btn.dataset.prReview !== 'review-good');
+          playPrReviewAnimation(btn.dataset.prReview === 'review-good' ? 'review-good' : 'review-bad');
+        });
+      });
+
+      function playPrReviewAnimation(viewId) {
+        const view = document.getElementById(viewId);
+        if (!view) return;
+        view.querySelectorAll('.gh-comment-thread, .gh-review-summary, .gh-memory-strip').forEach(el => {
+          el.classList.remove('visible');
+        });
+        const steps = [...view.querySelectorAll('[data-pr-delay]')].sort(
+          (a, b) => Number(a.dataset.prDelay || 0) - Number(b.dataset.prDelay || 0)
+        );
+        steps.forEach(step => {
+          setTimeout(() => step.classList.add('visible'), Number(step.dataset.prDelay || 0));
+        });
+      }
+
+      playPrReviewAnimation('review-bad');
+
       // Launch reel autoplay
       const engLines = [
         '<div style="color: var(--destructive);">✗ Proposes new entitlements microservice</div><div style="margin-top:0.5rem;">✗ Ignores existing Broker Research Entitlement Guard</div><div style="margin-top:0.5rem;color:var(--muted-fg);">$ claude — implement citation checks...</div>',
         '<div style="color:var(--destructive);">✗ POST /api/v1/entitlements/check — not in our stack</div><div style="margin-top:0.5rem;">✗ Admin UI + bulk import — wrong team\'s roadmap</div><div style="margin-top:0.5rem;color:var(--muted-fg);">Review: "Why rebuild what we have?"</div>',
-        '<div style="color:var(--destructive);">✗ Safe mode: no citations — unstated policy call</div><div style="margin-top:0.5rem;">✗ 17-week estimate for duplicate system</div><div style="margin-top:0.5rem;color:var(--muted-fg);">~60% of review = factual correction</div>'
+        '<div style="color:var(--destructive);">✗ Bot: "Add unit tests" — misses broker_id log constraint</div><div style="margin-top:0.5rem;">✗ Senior eng blocks merge — PR #2291 facts rediscovered</div><div style="margin-top:0.5rem;color:var(--success);">✓ QuarkMemory Review: line-anchored, memory-cited</div>'
       ];
       const pmLines = [
         '<div style="color:var(--destructive);">✗ 15 sections · greenfield microservice</div><div style="margin-top:0.5rem;">✗ Invented 50ms p95 · admin UI · PostgreSQL stack</div><div style="margin-top:0.5rem;color:var(--muted-fg);">Same prompt. Generic LLM draft.</div>',
