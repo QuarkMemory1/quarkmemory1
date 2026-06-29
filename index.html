@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="qm-api-base" content="https://api.quarkmemory.com" />
   <title>QuarkMemory — Every Decision Attached</title>
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -908,12 +909,138 @@
     .proof-card-link u { text-underline-offset: 3px; }
     .proof-cta { text-align: center; margin-top: 2.5rem; }
 
+    /* PRICING */
+    #pricing {
+      padding: 6rem 2rem;
+      border-top: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(182, 123, 230, 0.04) 0%, var(--background) 45%);
+    }
+    .pricing-inner { max-width: 1200px; margin: 0 auto; }
+    .pricing-header { text-align: center; max-width: 720px; margin: 0 auto 3rem; }
+    .pricing-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--secondary);
+      margin-bottom: 1rem;
+    }
+    .pricing-title {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+    }
+    .pricing-sub {
+      color: var(--body-fg);
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      align-items: stretch;
+    }
+    .pricing-card {
+      background: rgba(30, 28, 26, 0.55);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem 1.35rem 1.35rem;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .pricing-card:hover { border-color: rgba(182, 123, 230, 0.25); transform: translateY(-2px); }
+    .pricing-card.featured {
+      border-color: rgba(182, 123, 230, 0.45);
+      box-shadow: 0 0 40px rgba(182, 123, 230, 0.12);
+      position: relative;
+    }
+    .pricing-card.featured::before {
+      content: 'Most popular';
+      position: absolute;
+      top: -0.65rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: var(--primary);
+      color: var(--background);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .pricing-tier {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted-fg);
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.06em;
+    }
+    .pricing-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .pricing-price {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+    .pricing-price span { font-size: 0.85rem; font-weight: 500; color: var(--muted-fg); }
+    .pricing-note { font-size: 0.78rem; color: var(--muted-fg); margin-bottom: 1.25rem; min-height: 2.5rem; }
+    .pricing-features {
+      list-style: none;
+      margin: 0 0 1.5rem;
+      padding: 0;
+      flex: 1;
+    }
+    .pricing-features li {
+      font-size: 0.82rem;
+      color: var(--body-fg);
+      line-height: 1.5;
+      padding: 0.35rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .pricing-features li:last-child { border-bottom: none; }
+    .pricing-cta {
+      display: block;
+      text-align: center;
+      padding: 0.65rem 1rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .pricing-cta.primary {
+      background: var(--primary);
+      color: var(--background) !important;
+    }
+    .pricing-cta.primary:hover { background: var(--foreground); transform: translateY(-1px); }
+    .pricing-cta.secondary {
+      border: 1px solid var(--border);
+      color: var(--foreground);
+    }
+    .pricing-cta.secondary:hover { border-color: var(--primary); color: var(--primary); }
+    .pricing-cta.ghost {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--body-fg);
+    }
+    .pricing-footnote {
+      text-align: center;
+      margin-top: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted-fg);
+      line-height: 1.6;
+    }
+
     @media (max-width: 768px) {
       .proof-cards { grid-template-columns: 1fr; }
       #proof { padding: 3.5rem 1rem; }
     }
 
     @media (max-width: 1024px) {
+      .pricing-grid { grid-template-columns: repeat(2, 1fr); }
       .hero-inner {
         grid-template-columns: 1fr;
       }
@@ -1042,6 +1169,14 @@
         grid-template-columns: 1fr;
       }
 
+      #pricing {
+        padding: 4rem 1rem;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
       .source-card {
         padding: 1.75rem 1.25rem;
       }
@@ -1066,6 +1201,7 @@
       <a href="index.html" class="nav-logo"></a>
       <div class="nav-links">
         <a href="index.html" class="active">Home</a>
+        <a href="index.html#pricing">Pricing</a>
         <a href="solutions.html">Solutions</a>
         <a href="capabilities.html">Capabilities</a>
         <a href="about.html">About</a>
@@ -1354,6 +1490,76 @@
     </div>
   </section>
 
+  <section id="pricing">
+    <div class="pricing-inner">
+      <div class="pricing-header glass-anim">
+        <div class="pricing-tag mono">└── plans · PRD-044</div>
+        <h2 class="pricing-title">Institutional memory that scales with your team</h2>
+        <p class="pricing-sub">Self-serve Pro and Team plans checkout through Stripe. Pilot and Enterprise are provisioned by our team. Card data never touches QuarkMemory.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <article class="pricing-card glass-anim">
+          <div class="pricing-tier mono">PILOT</div>
+          <h3 class="pricing-name">Pilot</h3>
+          <div class="pricing-price">Free</div>
+          <p class="pricing-note">60-day full access · ops-provisioned</p>
+          <ul class="pricing-features">
+            <li>Unlimited seats &amp; repos*</li>
+            <li>Full MCP + PR review</li>
+            <li>Default re-index cadence</li>
+            <li>Convert to paid before expiry</li>
+          </ul>
+          <a href="#demo" class="pricing-cta ghost">Apply for pilot</a>
+        </article>
+
+        <article class="pricing-card glass-anim">
+          <div class="pricing-tier mono">PRO</div>
+          <h3 class="pricing-name">Pro</h3>
+          <div class="pricing-price">$59.99 <span>/ mo</span></div>
+          <p class="pricing-note">Solo builders &amp; small teams</p>
+          <ul class="pricing-features">
+            <li>1 seat · 1 repo</li>
+            <li>Weekly re-index</li>
+            <li>MCP context + PR review</li>
+            <li>Stripe Customer Portal</li>
+          </ul>
+          <a href="register.html?plan=pro" class="pricing-cta primary">Get started — Pro</a>
+        </article>
+
+        <article class="pricing-card featured glass-anim">
+          <div class="pricing-tier mono">TEAM</div>
+          <h3 class="pricing-name">Team</h3>
+          <div class="pricing-price">$299.99 <span>/ mo</span></div>
+          <p class="pricing-note">Growing eng orgs shipping faster</p>
+          <ul class="pricing-features">
+            <li>10 seats · 5 repos</li>
+            <li>Hourly re-index</li>
+            <li>Everything in Pro</li>
+            <li>Priority memory freshness</li>
+          </ul>
+          <a href="register.html?plan=team" class="pricing-cta primary">Get started — Team</a>
+        </article>
+
+        <article class="pricing-card glass-anim">
+          <div class="pricing-tier mono">ENTERPRISE</div>
+          <h3 class="pricing-name">Enterprise</h3>
+          <div class="pricing-price">Custom</div>
+          <p class="pricing-note">Sales-led · contract terms</p>
+          <ul class="pricing-features">
+            <li>Contract seats &amp; repos</li>
+            <li>On-prem / VPC options</li>
+            <li>Custom re-index SLA</li>
+            <li>Dedicated support</li>
+          </ul>
+          <a href="mailto:admin@quarkmemory.com?subject=QuarkMemory%20Enterprise" class="pricing-cta secondary">Contact sales</a>
+        </article>
+      </div>
+
+      <p class="pricing-footnote">* Pilot limits are informational in v1 — tier enforcement ships separately. Self-serve checkout requires hosted <code>api.quarkmemory.com</code> billing APIs.</p>
+    </div>
+  </section>
+
   <section id="demo" style="padding: 8rem 2rem; border-top: 1px solid var(--border); overflow: hidden;">
     <div class="section-inner" style="max-width: 600px; margin: 0 auto; text-align: center;">
       <h2 class="rag-heading" style="font-size: clamp(36px, 5vw, 64px); margin-bottom: 1rem; line-height: 1.1;">Join Our
@@ -1385,7 +1591,7 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const cards = document.querySelectorAll('.code-panel, .rag-cta, .rag-stat, .rag-col, .q-card, .highlight-box, .highlight-quote, .cap-card, .cap-integrity-box, .ev-cell, .broken-memory-panel, .beyond-rag-panel, .source-card, .proof-card');
+      const cards = document.querySelectorAll('.code-panel, .rag-cta, .rag-stat, .rag-col, .q-card, .highlight-box, .highlight-quote, .cap-card, .cap-integrity-box, .ev-cell, .broken-memory-panel, .beyond-rag-panel, .source-card, .proof-card, .pricing-card, .pricing-header');
       cards.forEach(el => el.classList.add('glass-anim'));
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {

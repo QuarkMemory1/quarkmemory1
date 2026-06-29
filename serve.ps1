@@ -1,8 +1,10 @@
+param([int]$Port = 8000)
+
 $root = $PSScriptRoot
 $listener = New-Object System.Net.HttpListener
-$listener.Prefixes.Add('http://localhost:8080/')
+$listener.Prefixes.Add("http://localhost:$Port/")
 $listener.Start()
-Write-Host "Serving $root at http://localhost:8080/"
+Write-Host "Serving $root at http://localhost:$Port/"
 while ($listener.IsListening) {
   $context = $listener.GetContext()
   $path = $context.Request.Url.LocalPath

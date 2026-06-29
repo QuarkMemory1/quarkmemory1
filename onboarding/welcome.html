@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="qm-api-base" content="https://api.quarkmemory.com" />
+  <title>QuarkMemory — Welcome</title>
+  <link rel="icon" type="image/png" href="../logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --background: #0d0c0b;
+      --foreground: #f5f3f0;
+      --primary: #b67be6;
+      --muted-fg: #8a8480;
+      --body-fg: #c8c4be;
+      --border: #242220;
+      --success: #40c057;
+      --destructive: #e84040;
+    }
+    body {
+      background: var(--background);
+      color: var(--foreground);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .card {
+      max-width: 520px;
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      background: rgba(30, 28, 26, 0.5);
+      text-align: center;
+    }
+    h1 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+    p { color: var(--body-fg); line-height: 1.6; margin-bottom: 1rem; }
+    .status { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted-fg); }
+    .spinner {
+      width: 28px; height: 28px; margin: 1rem auto;
+      border: 3px solid rgba(182, 123, 230, 0.2);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn {
+      display: inline-block;
+      margin-top: 1rem;
+      background: var(--primary);
+      color: var(--background);
+      font-weight: 700;
+      padding: 0.65rem 1.25rem;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .error { color: #ff8787; font-size: 0.9rem; }
+    .success { color: var(--success); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="mono" style="color:var(--primary);font-size:0.7rem;margin-bottom:1rem;">└── onboarding.welcome</div>
+    <h1 id="title">Activating your subscription</h1>
+    <div class="spinner" id="spinner"></div>
+    <p id="message">Confirming payment with QuarkMemory…</p>
+    <p class="status" id="status-line"></p>
+    <a href="#" class="btn" id="admin-link" style="display:none;">Open admin console</a>
+  </div>
+
+  <script src="../js/billing.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const params = new URLSearchParams(window.location.search);
+      const orgId = params.get("org_id");
+      const session = QMBilling.loadSession();
+      const accessToken = session.accessToken;
+      const resolvedOrgId = orgId || session.orgId;
+
+      const title = document.getElementById("title");
+      const message = document.getElementById("message");
+      const statusLine = document.getElementById("status-line");
+      const spinner = document.getElementById("spinner");
+      const adminLink = document.getElementById("admin-link");
+
+      adminLink.href = QMBilling.adminOverviewUrl();
+
+      if (!resolvedOrgId || !accessToken) {
+        spinner.style.display = "none";
+        title.textContent = "Session expired";
+        message.innerHTML = '<span class="error">Sign in again from <a href="../register.html" style="color:var(--primary);">register</a> or open the admin console.</span>';
+        adminLink.style.display = "inline-block";
+        adminLink.textContent = "Go to admin";
+        return;
+      }
+
+      try {
+        const billing = await QMBilling.pollBillingActive(resolvedOrgId, accessToken);
+        spinner.style.display = "none";
+        title.textContent = "You're all set";
+        message.innerHTML = `<span class="success">${billing.plan_display_name || billing.plan_tier} is active.</span> Connect repos and start building institutional memory.`;
+        statusLine.textContent = `Org ${resolvedOrgId.slice(0, 8)}… · subscription active`;
+        adminLink.style.display = "inline-block";
+        setTimeout(() => { window.location.href = QMBilling.adminOverviewUrl(); }, 2500);
+      } catch (err) {
+        spinner.style.display = "none";
+        title.textContent = "Almost there";
+        message.innerHTML = `<span class="error">${err.message}</span>`;
+        statusLine.textContent = "Webhook may still be processing.";
+        adminLink.style.display = "inline-block";
+        adminLink.textContent = "Open billing in admin";
+        adminLink.href = `${QMBilling.getApiBase()}/admin/#/billing`;
+      }
+    });
+  </script>
+</body>
+</html>

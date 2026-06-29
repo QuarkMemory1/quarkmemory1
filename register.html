@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="qm-api-base" content="https://api.quarkmemory.com" />
+  <title>QuarkMemory — Create account &amp; subscribe</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --background: #0d0c0b;
+      --foreground: #f5f3f0;
+      --primary: #b67be6;
+      --secondary: #ffad03;
+      --muted-fg: #8a8480;
+      --body-fg: #c8c4be;
+      --border: #242220;
+      --destructive: #e84040;
+      --success: #40c057;
+    }
+    body {
+      background: var(--background);
+      color: var(--foreground);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      padding: 6rem 1.5rem 3rem;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    a { color: inherit; text-decoration: none; }
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      background: rgba(13, 12, 11, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 960px; margin: 0 auto; padding: 1rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { width: 40px; height: 40px; background: url('logo.png') center/cover no-repeat; }
+    .wrap { max-width: 520px; margin: 0 auto; }
+    .tag { font-size: 0.7rem; color: var(--secondary); margin-bottom: 1rem; }
+    h1 { font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+    .lead { color: var(--body-fg); margin-bottom: 2rem; line-height: 1.6; }
+    .plan-badge {
+      display: inline-block;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(182, 123, 230, 0.35);
+      background: rgba(182, 123, 230, 0.12);
+      color: var(--primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+    form { display: grid; gap: 1rem; }
+    label { display: block; font-size: 0.75rem; color: var(--muted-fg); margin-bottom: 0.35rem; }
+    input {
+      width: 100%;
+      padding: 0.65rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.25);
+      color: var(--foreground);
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+    input:focus { outline: none; border-color: var(--primary); }
+    .btn-primary {
+      margin-top: 0.5rem;
+      background: var(--primary);
+      color: var(--background);
+      font-weight: 700;
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .btn-primary:disabled { opacity: 0.6; cursor: wait; }
+    .error {
+      display: none;
+      padding: 0.75rem;
+      border-radius: 6px;
+      border: 1px solid rgba(232, 64, 64, 0.35);
+      background: rgba(232, 64, 64, 0.08);
+      color: #ff8787;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    .error.visible { display: block; }
+    .fine { margin-top: 1.5rem; font-size: 0.8rem; color: var(--muted-fg); line-height: 1.6; }
+    .fine a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="QuarkMemory home"></a>
+      <a href="index.html#pricing" class="mono" style="font-size:0.75rem;color:var(--muted-fg);">← Back to pricing</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="tag mono">└── checkout.register</div>
+    <div class="plan-badge" id="plan-badge">Plan: —</div>
+    <h1>Create your workspace</h1>
+    <p class="lead">Register your organisation, then continue to Stripe Checkout — card data never touches QuarkMemory.</p>
+
+    <div class="error" id="form-error" role="alert"></div>
+
+    <form id="register-form" novalidate>
+      <div>
+        <label for="email">Work email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required />
+      </div>
+      <div>
+        <label for="display_name">Your name</label>
+        <input id="display_name" name="display_name" type="text" autocomplete="name" />
+      </div>
+      <div>
+        <label for="org_display_name">Organisation name</label>
+        <input id="org_display_name" name="org_display_name" type="text" required />
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required />
+      </div>
+      <button type="submit" class="btn-primary" id="submit-btn">Continue to Stripe Checkout</button>
+    </form>
+
+    <p class="fine">By continuing you agree to our <a href="terms.html">Terms of Service</a>. Need Enterprise or Pilot? <a href="index.html#demo">Contact us</a>.</p>
+  </div>
+
+  <script src="js/billing.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const plan = QMBilling.parsePlan(params.get("plan"));
+      const badge = document.getElementById("plan-badge");
+      const form = document.getElementById("register-form");
+      const errorEl = document.getElementById("form-error");
+      const submitBtn = document.getElementById("submit-btn");
+
+      if (!plan) {
+        window.location.replace("index.html#pricing");
+        return;
+      }
+
+      const planLabel = plan === "pro" ? "Pro · $59.99/mo" : "Team · $299.99/mo";
+      badge.textContent = `Plan: ${planLabel}`;
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        errorEl.classList.remove("visible");
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Creating account…";
+
+        const data = Object.fromEntries(new FormData(form).entries());
+        try {
+          await QMBilling.startCheckout(plan, data);
+        } catch (err) {
+          errorEl.textContent = err.message || "Something went wrong. Try again or email admin@quarkmemory.com.";
+          errorEl.classList.add("visible");
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Continue to Stripe Checkout";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
