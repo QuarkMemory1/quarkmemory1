@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="qm-api-base" content="https://api.quarkmemory.com" />
-  <title>QuarkMemory — Create account &amp; subscribe</title>
+  <title>QuarkMemory — Create your account</title>
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -126,10 +126,10 @@
   <script src="js/nav.js"></script>
 
   <div class="wrap">
-    <div class="tag mono">└── checkout.register</div>
-    <div class="plan-badge" id="plan-badge">Plan: —</div>
-    <h1>Create your workspace</h1>
-    <p class="lead">Register your organisation, then continue to Stripe Checkout — card data never touches QuarkMemory.</p>
+    <div class="tag mono">└── register</div>
+    <div class="plan-badge" id="plan-badge" style="display:none;"></div>
+    <h1>Create your account</h1>
+    <p class="lead">Register your organisation, then continue to the QuarkMemory dashboard to connect repos and get started.</p>
 
     <div class="error" id="form-error" role="alert"></div>
 
@@ -150,7 +150,7 @@
         <label for="password">Password</label>
         <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required />
       </div>
-      <button type="submit" class="btn-primary" id="submit-btn">Continue to Stripe Checkout</button>
+      <button type="submit" class="btn-primary" id="submit-btn">Proceed to dashboard</button>
     </form>
 
     <p class="fine">By continuing you agree to our <a href="terms.html">Terms of Service</a>. Need Enterprise or Pilot? <a href="index.html#demo">Contact us</a>.</p>
@@ -166,13 +166,11 @@
       const errorEl = document.getElementById("form-error");
       const submitBtn = document.getElementById("submit-btn");
 
-      if (!plan) {
-        badge.textContent = "Plan: select on pricing";
-        return;
+      if (plan) {
+        const planLabel = plan === "pro" ? "Pro · $59.99/mo" : "Team · $299.99/mo";
+        badge.textContent = `Plan: ${planLabel}`;
+        badge.style.display = "inline-block";
       }
-
-      const planLabel = plan === "pro" ? "Pro · $59.99/mo" : "Team · $299.99/mo";
-      badge.textContent = `Plan: ${planLabel}`;
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -182,12 +180,12 @@
 
         const data = Object.fromEntries(new FormData(form).entries());
         try {
-          await QMBilling.startCheckout(plan, data);
+          await QMBilling.registerAndGoToAdmin(data);
         } catch (err) {
           errorEl.textContent = err.message || "Something went wrong. Try again or email admin@quarkmemory.com.";
           errorEl.classList.add("visible");
           submitBtn.disabled = false;
-          submitBtn.textContent = "Continue to Stripe Checkout";
+          submitBtn.textContent = "Proceed to dashboard";
         }
       });
     });

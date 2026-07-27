@@ -134,6 +134,43 @@
     };
   }
 
+  function getAdminBase() {
+    return window.location.origin.replace(/\/$/, "");
+  }
+
+  function adminOnboardingUrl() {
+    return `${getAdminBase()}/admin/#/onboarding`;
+  }
+
+  function adminOverviewUrl() {
+    return `${getAdminBase()}/admin/#/overview`;
+  }
+
+  async function registerAndGoToAdmin(formPayload) {
+    const orgSlug = slugify(formPayload.org_slug || formPayload.org_display_name || formPayload.email.split("@")[0]);
+    const payload = {
+      email: formPayload.email.trim(),
+      password: formPayload.password,
+      display_name: formPayload.display_name.trim() || formPayload.email.split("@")[0],
+      org_slug: orgSlug,
+      org_display_name: formPayload.org_display_name.trim() || orgSlug,
+    };
+
+    const auth = await registerWithOrg(payload);
+    if (!auth.access_token || !auth.org_id) {
+      throw new Error("Account created but organisation id missing — contact support.");
+    }
+
+    saveSession({
+      accessToken: auth.access_token,
+      refreshToken: auth.refresh_token,
+      orgId: auth.org_id,
+      email: payload.email,
+    });
+
+    window.location.href = adminOnboardingUrl();
+  }
+
   async function startCheckout(plan, formPayload) {
     const selected = parsePlan(plan);
     if (!selected) throw new Error("Invalid plan — choose Pro or Team.");
@@ -182,10 +219,6 @@
     throw new Error("Still processing — check email or billing settings in the admin console.");
   }
 
-  function adminOverviewUrl() {
-    return `${getApiBase()}/admin/#/overview`;
-  }
-
   global.QMBilling = {
     SESSION_KEY,
     getApiBase,
@@ -195,8 +228,10 @@
     parsePlan,
     registerPath,
     startCheckout,
+    registerAndGoToAdmin,
     pollBillingActive,
     adminOverviewUrl,
+    adminOnboardingUrl,
     api,
   };
 })(window);
